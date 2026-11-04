@@ -36,10 +36,12 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
   conversation sending and sign-in layout. After macOS Keychain approval, the
   standard app restored the selected live project, all 12 items and Slack history
   with the new design. Local builds have public update checks disabled.
-- **Publication:** no public source or release was uploaded by this work. The
-  intended repository is `oddmundleikvoll/sprintwake-projects`; the local checkout
-  still has no initial commit or Git remote. MIT License and publication docs are
-  prepared; native screenshots show fictional isolated demo data only.
+- **Publication:** source is public at
+  [oddmundleikvoll/sprintwake-projects](https://github.com/oddmundleikvoll/sprintwake-projects)
+  under the MIT License. README has installation/setup instructions, a copyable
+  LLM prompt and native screenshots with fictional isolated demo data only.
+  The initial commit is pushed to `origin/main`. Hosted CI and the first signed
+  binary release are in progress.
 
 ## Latest verification evidence
 
@@ -63,18 +65,17 @@ or channel. The production Sparkle-key preview waited on Keychain access and was
 stopped. Production-key signing remains to be completed; the owner must handle
 any macOS approval.
 
-CI is configured to run Swift tests, release tests and packaging on macOS, then
-upload a ZIP. A hosted CI run/public release has not been verified from this
-unpublished checkout. There is no separate lint or formatter command.
+CI runs Swift tests, release tests and packaging on macOS, then uploads a ZIP.
+The public repository has been pushed; hosted CI and release verification are
+in progress. There is no separate lint or formatter command.
 
 ## Remaining work, in order
 
-1. Finish independent review of the intended public source/docs/assets.
+1. Public-source review and publication are complete; check hosted CI.
 2. Own-client Slack setup and distribution limits are documented. Complete
    distribution and test another workspace before offering the bundled client
    generally; this is optional for users with their own client.
-3. Make the initial commit, connect/create the intended GitHub repository, push
-   reviewed source and check CI.
+3. The initial commit and GitHub remote are in place; finish binary release preparation.
 4. Complete Sparkle Keychain signing access; prepare and review the first signed
    community release from clean committed source.
 5. Publish ZIP/appcast/checksum, verify the hosted URLs and test a fresh download
@@ -537,5 +538,6 @@ No Client Secret was generated. No private token is written to this repository.
 - `./scripts/test.sh`: 121 tests/14 suites passed after correcting a pre-existing
   hardcoded Norwegian board-grouping expectation. `./scripts/test-release.sh`
   and `swift build -c release` passed. Local CLT search-path warnings remain.
-- Source review, GitHub publication, hosted CI and production release preparation
-  are still in progress; no fresh-install/public-update verification is claimed.
+- Independent review found no material defects. Created the initial commit and
+  pushed the reviewed files to the public GitHub repository. Hosted CI and
+  production release preparation remain in progress; no fresh-install/public-update verification is claimed.

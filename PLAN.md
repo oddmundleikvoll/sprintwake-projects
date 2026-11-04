@@ -23,7 +23,7 @@ This plan tracks the work remaining before the first public release.
   installation that protects active writes and unfinished edits.
 - [x] Community release preparation without paid Apple membership. Developer ID
   and notarization remain optional through `./scripts/release.sh --notarize`.
-- [x] Latest verification: 120 tests across 14 suites, release configuration and
+- [x] Latest verification: 121 tests across 14 suites, release configuration and
   signature tests, optimized packaging, isolated native update/relaunch and
   rejection of changed archives. See STATUS.md for the exact scope and limits.
 - [x] Retire the old Sporverk app copy by moving it to Trash.
@@ -56,19 +56,18 @@ GitHub API; do not claim it is implemented. No invitation service or repository
 invitation substitute was introduced. Cross-account sharing is tested with injected
 APIs and isolated demo fixtures, not real permission changes.
 
-## Next: prepare the public repository
+## Public repository
 
-1. **Review the files intended for publication.** Check source, configuration,
-   documentation, fixtures and branding for credentials, private keys and
-   machine-specific/private material. Only public OAuth Client IDs and the public
-   Sparkle key belong in the repository. Exclude `.build/`, `dist/` and local QA
-   artifacts. Do not publish the historical record blindly.
-2. **Create the initial commit and connect GitHub.** The local checkout has no
-   commit or remote. Create or verify `oddmundleikvoll/sprintwake-projects`, add
-   its remote, commit the reviewed files and push the intended source. Check the
-   macOS CI results, including release tests and packaged ZIP artifact.
+- [x] Reviewed source, configuration, docs, fixtures and assets for private material.
+  Credential/private-key/home-path scans and independent review found no blockers.
+  Real workspace/channel names were removed from the historical public record.
+  `.build/`, `dist/` and local QA artifacts are excluded.
+- [x] Created the initial commit and published the public repository:
+  [oddmundleikvoll/sprintwake-projects](https://github.com/oddmundleikvoll/sprintwake-projects).
+  `origin` tracks the repository and `main` is pushed.
+- [ ] Check hosted macOS CI, including release tests and the packaged ZIP artifact.
 
-## Then: prepare and publish the first community release
+## Next: prepare and publish the first community release
 
 1. Confirm the first public version/build in `Configuration/Release.json`
    (currently `0.2.0`, build `2`). Later public updates must increase the build.

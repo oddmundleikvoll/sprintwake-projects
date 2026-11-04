@@ -19,7 +19,7 @@ struct ChatView: View {
                 }
                 Spacer()
                 if let field = model.selectedField {
-                    Picker(L10n.ui("Conversation column"), selection: Binding(get: { model.conversationOptionID ?? "" }, set: model.setConversationOption)) {
+                    Picker(L10n.ui("Conversation column"), selection: Binding(get: { model.conversationOptionID ?? "" }, set: { model.setConversationOption($0) })) {
                         Text(L10n.ui("Choose column")).tag("")
                         ForEach(field.options) { Text($0.name).tag($0.id) }
                     }.fixedSize().disabled(model.isMutating)

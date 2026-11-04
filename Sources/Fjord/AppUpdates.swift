@@ -215,7 +215,7 @@ struct AppUpdateSettings: View {
             case .invalid:
                 Text(L10n.ui("Update settings are incomplete. Download the latest release from GitHub.")).font(.callout).foregroundStyle(.secondary)
             case .ready:
-                Toggle(L10n.ui("Automatically check for updates"), isOn: Binding(get: { updates.automaticChecks }, set: updates.setAutomaticChecks))
+                Toggle(L10n.ui("Automatically check for updates"), isOn: Binding(get: { updates.automaticChecks }, set: { updates.setAutomaticChecks($0) }))
                 Text(L10n.ui("You choose when to download and install. Updates are verified before installation.")).font(.caption).foregroundStyle(.secondary)
             }
             UpdateAvailableButton()

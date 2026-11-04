@@ -113,7 +113,11 @@ PY
 )"
 "$VERIFY_DIR/verify-update" "$(python3 -c 'import json,sys; print(json.load(sys.stdin)["sparklePublicKey"])' <<<"$CONFIG_JSON")" "$SIGNATURE" "$ARCHIVE"
 "$SIGN_TOOL" --account "$KEYCHAIN_ACCOUNT" --verify "$APPCAST"
-shasum -a 256 "$ARCHIVE" > "$ARCHIVE.sha256"
+# A portable checksum must contain only the download's filename, never a local path.
+(
+  cd "$ARTIFACT_DIR"
+  shasum -a 256 "${ARCHIVE##*/}" > "${ARCHIVE##*/}.sha256"
+)
 if [[ "$(git rev-parse HEAD)" != "$RELEASE_COMMIT" || -n "$(git status --porcelain)" ]]; then
   echo "The source changed during release preparation; rebuild from the intended clean commit." >&2
   exit 2

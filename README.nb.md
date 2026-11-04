@@ -7,6 +7,12 @@ backend. Sparkle håndterer signerte appoppdateringer. GitHub er kilden til pros
 Navnet **Sprintwake Projects** binder sammen fremdrift og arbeidsflyt. S-logoen er et sammenhengende spor med en mintgrønn endestasjon.
 Redigerbar logo og PNG-er ligger i `Branding/`.
 
+**Innebygd prosjektchat – uten egen server.** Oppgaver og samtaler samles i samme
+arbeidsrom. Appen lagrer chatmeldinger som utkast i GitHub-prosjektet og kobler seg
+direkte til GitHub. Du trenger ingen egen Sprintwake-server eller database å drifte.
+Alle med lesetilgang til prosjektet kan lese samtalen; sending krever skrivetilgang.
+Slack er et valgfritt tillegg for team som allerede bruker det.
+
 ![Sprintwake Projects med det fiktive prosjektet Website launch](Documentation/Screenshots/board.jpg)
 
 *Skjermbildene viser appen med isolerte eksempeldata, uten private prosjekter,

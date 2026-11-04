@@ -252,7 +252,7 @@ struct WorkspaceView: View {
                 }
                 HStack(spacing: 12) {
                     if !snapshot.fields.isEmpty {
-                        Picker(L10n.ui("Group by"), selection: Binding(get: { model.selectedFieldID ?? "" }, set: model.setGrouping)) {
+                        Picker(L10n.ui("Group by"), selection: Binding(get: { model.selectedFieldID ?? "" }, set: { model.setGrouping($0) })) {
                             ForEach(snapshot.fields) { Text($0.name).tag($0.id) }
                         }.frame(maxWidth: 260).disabled(model.isMutating)
                     }

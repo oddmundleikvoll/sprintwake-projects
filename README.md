@@ -7,6 +7,12 @@ drafts and project conversations close to your work. Built with Swift 6 and
 SwiftUI for macOS 14+, with no backend. Sparkle handles signed app updates.
 GitHub remains the source of truth.
 
+**Built-in project chat. No server to run.** Keep tasks and team conversations
+together: chat messages are stored as drafts in your GitHub project, and the app
+connects directly to GitHub. You do not need to deploy a Sprintwake server or
+database. Everyone with project access can read the conversation; sending needs
+write access. Slack is an optional extra if your team already uses it.
+
 ![Sprintwake Projects board with the fictional Website launch project](Documentation/Screenshots/board.jpg)
 
 *Real app screenshots, using an isolated fictional workspace. No personal
@@ -255,6 +261,10 @@ A confirmed create stays successful if a later step fails. The app preserves the
 created issue URL and explains what remains, preventing duplicate creation retries.
 
 ## Project conversations
+
+Project chat is built in and works with your GitHub connection alone. There is
+no separate chat account, Slack requirement or server for you to host. GitHub
+stores the messages in the project and controls access through project permissions.
 
 Use the conversation column on the board or the larger conversation view. A column
 named `Chat` or `Samtale` is selected automatically. Another column can be chosen

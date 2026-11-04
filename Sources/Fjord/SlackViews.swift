@@ -60,7 +60,8 @@ struct ProjectConversationView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 14) {
-                Picker(L10n.ui("Conversation source"), selection: Binding(get: { slack.source }, set: slack.setSource)) {
+                // A bound @MainActor method reference crashes Swift 6.3's IRGen.
+                Picker(L10n.ui("Conversation source"), selection: Binding(get: { slack.source }, set: { slack.setSource($0) })) {
                     Text(L10n.ui("GitHub drafts")).tag(ConversationSource.github)
                     Text("Slack").tag(ConversationSource.slack)
                 }.pickerStyle(.segmented).frame(width: 300)

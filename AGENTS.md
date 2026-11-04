@@ -37,6 +37,10 @@ CI runs `./scripts/test.sh`, `./scripts/test-release.sh` and
 `./scripts/build-app.sh` on macOS, then uploads the packaged ZIP.
 No separate lint or formatter is configured.
 
+Swift 6.3 compatibility: use an explicit closure for actor-isolated SwiftUI
+Binding setters (for example `{ model.setSource($0) }`). A direct bound method
+reference can crash that compiler's IR generation; local Swift 6.4 masks it.
+
 ## Boundaries
 
 - `Sources/FjordCore`: models, GitHub transport, Device Flow, Keychain/session,

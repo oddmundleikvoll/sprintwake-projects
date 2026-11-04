@@ -20,6 +20,12 @@ state and sends user actions back. Mutations are confirmed by GitHub. Generation
 checks prevent obsolete requests from repopulating a signed-out session or a
 different project. The demo uses an independent in-memory API and no credentials.
 
+SwiftUI bindings use explicit closures for actor-isolated model setters. The
+hosted Swift 6.3.3 compiler crashed during IR generation when Slack's source
+picker passed `slack.setSource` as a bound method reference. The closure keeps
+the same main-actor call and avoids that compiler thunk; local Swift 6.4 did
+not reproduce the crash.
+
 Project chat is a presentation of DraftIssue items in one selected single-select
 option (normally a new `Samtale` column). Message creation assigns the current
 GitHub user's node ID; the draft creator supplies authorship, not the mutable

@@ -324,6 +324,7 @@ API contracts: [Projects](https://docs.github.com/en/graphql/reference/projects)
 
 ## License
 
-Sprintwake Projects is available under the [MIT License](LICENSE).
+Sprintwake Projects is available under the [MIT License](LICENSE), also included
+in the packaged app as `Sprintwake-LICENSE`.
 Sparkle is distributed under its own license, included in the packaged app as
 `Sparkle-LICENSE`. GitHub and Slack are separate services with their own terms.

@@ -54,7 +54,8 @@ malware assessment. Ad hoc rebuilds may also prompt again for Keychain access.
 ./scripts/release.sh
 ```
 
-The script builds an ad hoc-signed app with public update checks enabled, creates
+The script builds an ad hoc-signed app with public update checks enabled, includes
+the project's MIT License and Sparkle's license in its resources, and creates
 a ZIP preserving framework symlinks, and uses Sparkle tools to sign the archive
 and appcast. It verifies both signatures against the configured key, version/build,
 asset URL and archive length. Output is in `dist/release/<version>`.

@@ -131,7 +131,8 @@ else
   echo "Sparkle.framework was not found in the SwiftPM artifacts." >&2
   exit 1
 fi
-# Keep Sparkle's required notices with the distributed application.
+# Keep the project and dependency notices with the distributed application.
+cp "$TASK_ROOT/LICENSE" "$APP_PATH/Contents/Resources/Sprintwake-LICENSE"
 cp "$TASK_ROOT/.build/artifacts/sparkle/Sparkle/LICENSE" "$APP_PATH/Contents/Resources/Sparkle-LICENSE"
 
 if [[ -d "$APP_PATH/Contents/Frameworks/Sparkle.framework" ]]; then

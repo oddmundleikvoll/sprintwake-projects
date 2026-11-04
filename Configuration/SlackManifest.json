@@ -1,0 +1,19 @@
+{
+  "display_information": {
+    "name": "Sprintwake Projects",
+    "description": "Bring a Slack channel into your GitHub project on macOS.",
+    "background_color": "#12384A"
+  },
+  "oauth_config": {
+    "redirect_urls": ["sprintwake-slack://oauth/callback"],
+    "scopes": {
+      "user": ["channels:read", "channels:history", "users:read", "chat:write", "groups:read", "groups:history"]
+    },
+    "pkce_enabled": true
+  },
+  "settings": {
+    "org_deploy_enabled": false,
+    "socket_mode_enabled": false,
+    "token_rotation_enabled": true
+  }
+}

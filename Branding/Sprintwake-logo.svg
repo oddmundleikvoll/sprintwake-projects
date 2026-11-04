@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="260" viewBox="0 0 1200 260" role="img" aria-label="Sprintwake Projects">
+  <g transform="translate(-30,-24) scale(.30)">
+    <path d="M700 300H430C350 300 300 346 300 406S350 512 430 512H594C674 512 724 558 724 618S674 724 594 724H324" fill="none" stroke="#4d45c7" stroke-width="108" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="700" cy="300" r="67.5" fill="#66e8b8"/>
+  </g>
+  <text x="254" y="156" fill="#292b5c" font-family="-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif" font-size="96" font-weight="600" letter-spacing="-3">Sprintwake</text>
+  <text x="260" y="218" fill="#4d45c7" font-family="-apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif" font-size="31" font-weight="500" letter-spacing="10">PROJECTS</text>
+</svg>

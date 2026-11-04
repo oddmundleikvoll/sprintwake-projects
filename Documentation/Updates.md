@@ -9,11 +9,12 @@ Automatic installation and system-profile telemetry are disabled.
 
 ## Initial setup
 
-The intended repository is `oddmundleikvoll/sprintwake-projects`. No repository or
-release is published by the build scripts. Commit the source and create/push the
-public repository before preparing its first release.
-The [project plan](../PLAN.md) tracks the ordered first-publication prerequisites,
-including licensing, Slack distribution and fresh-install verification;
+The public repository is `oddmundleikvoll/sprintwake-projects`, with community
+release `v0.2.0` (build 2). The build scripts prepare local artifacts; publishing
+is a separate manual step. Commit and push reviewed source before preparing
+later releases, and increase the build number for each public update.
+The [project plan](../PLAN.md) records publication and remaining fresh-install,
+public-update and optional Slack distribution verification;
 [STATUS.md](../STATUS.md) distinguishes local evidence from public release testing.
 
 `Configuration/Release.json` contains the version, monotonically increasing

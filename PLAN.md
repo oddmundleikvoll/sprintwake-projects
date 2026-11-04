@@ -2,7 +2,7 @@
 
 Updated 2026-11-04. [STATUS.md](STATUS.md) contains the current snapshot and dated
 verification history. [CONTEXT.md](CONTEXT.md) records architecture and decisions.
-This plan tracks the work remaining before the first public release.
+This plan records publication and the remaining distribution verification.
 
 ## Completed
 
@@ -65,35 +65,33 @@ APIs and isolated demo fixtures, not real permission changes.
 - [x] Created the initial commit and published the public repository:
   [oddmundleikvoll/sprintwake-projects](https://github.com/oddmundleikvoll/sprintwake-projects).
   `origin` tracks the repository and `main` is pushed.
-- [ ] Check hosted macOS CI, including release tests and the packaged ZIP artifact.
+- [x] Hosted macOS CI passed for release source `a189bc6`, including tests, release
+  checks, optimized app packaging and the ZIP artifact (run 41911644644).
 
-## Next: prepare and publish the first community release
+## Published community release
 
-1. Confirm the first public version/build in `Configuration/Release.json`
-   (currently `0.2.0`, build `2`). Later public updates must increase the build.
-   Keep the configured repository, feed URL and public signing key stable.
-2. Resolve access to the existing Sparkle signing key in Keychain account
-   **Sprintwake Projects Updates** and verify production-key signing. The last
-   preview stopped while Keychain access was pending. The owner must handle any
-   system approval. Never export the private key into source, scripts, logs or
-   release assets.
-3. From a clean committed tree, run `./scripts/test.sh`,
-   `./scripts/test-release.sh` and `./scripts/release.sh`. Use an alternate
-   `SPRINTWAKE_APP_PATH` if the default app is running. Review the generated
-   ZIP, signed `appcast.xml`, checksum and commit/tag provenance before publishing.
-   [Updates.md](Documentation/Updates.md) describes the exact process.
-4. Publish the release and assets using the command printed by the release
-   script. Confirm the GitHub HTTPS feed/archive URLs work and reference the
-   intended version. The scripts prepare artifacts and a local tag; they do not
-   upload or publish automatically.
-5. Test a fresh download on another Mac or a separate macOS test account. Record
-   any first-launch approval and Keychain prompts, and verify English/Norwegian,
-   GitHub restoration and optional Slack. Current packages target the build
-   Mac's architecture; Intel/universal distribution has not been qualified.
-6. Install the first public release for existing local users; local development
-   builds have public update checks disabled. Verify the first subsequent real
-   update through the public feed, including the download indicator, signature
-   validation and install/relaunch, on a separate test installation.
+- [x] Version 0.2.0/build 2 published from clean source `a189bc6`, with the matching
+  remote tag and passing macOS CI. Future public updates must increase the build.
+- [x] Existing Sparkle Keychain signing key used successfully; ZIP/feed signatures
+  verified. The private key was not exported or changed.
+- [x] Production app packaged with en/nb resources, both licenses, safe updater
+  settings and preserved framework symlinks. The standard installed app was not replaced.
+- [x] Published ZIP, signed appcast and portable SHA-256 checksum to
+  [v0.2.0](https://github.com/oddmundleikvoll/sprintwake-projects/releases/tag/v0.2.0).
+- [x] Anonymous public HTTPS downloads, including the latest feed URL, match the
+  local verified artifacts. Downloaded ZIP checksum/Ed25519 signature and the
+  extracted app's deep strict code signature pass.
+
+## Next: qualify fresh installation and future updates
+
+1. Test a fresh public download on another Mac or a separate macOS test account.
+   Record first-launch approval and Keychain prompts, English/Norwegian, GitHub
+   restoration and optional Slack. The published package is arm64/macOS 14+;
+   Intel/universal distribution has not been qualified.
+2. Existing local users can install the first public release to receive future
+   updates; local development builds have public update checks disabled. When a
+   later release exists, verify an actual public-feed update on a separate test
+   installation, including download indicator, signatures and install/relaunch.
 
 ## Optional later work
 

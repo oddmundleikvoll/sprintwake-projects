@@ -40,8 +40,12 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
   [oddmundleikvoll/sprintwake-projects](https://github.com/oddmundleikvoll/sprintwake-projects)
   under the MIT License. README has installation/setup instructions, a copyable
   LLM prompt and native screenshots with fictional isolated demo data only.
-  The initial commit is pushed to `origin/main`. Hosted CI and the first signed
-  binary release are in progress.
+  [Community release v0.2.0](https://github.com/oddmundleikvoll/sprintwake-projects/releases/tag/v0.2.0)
+  (build 2, arm64/macOS 14+) is public, with signed ZIP/appcast and a portable checksum.
+  [Hosted CI](https://github.com/oddmundleikvoll/sprintwake-projects/actions/runs/41911644644)
+  passed for release source `a189bc6`. Anonymous HTTPS downloads and the archive's
+  production-key signature were verified. Fresh installation on another Mac and
+  a subsequent update through the public feed remain unverified.
 
 ## Latest verification evidence
 
@@ -53,7 +57,7 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
 | Real GitHub/Slack reads and restart | Passed with all 12 project items, selected project/channel and Slack history restored; no new OAuth flow required. |
 | Language switching | Native demo retained unfinished text, selection and session while switching English/Norwegian; resources also worked outside the checkout. |
 | Native updater installation | Disposable older/newer demo bundles completed signed loopback download, edit protection, replacement and relaunch. |
-| Community ZIP/feed signatures | Actual app copy signed with a disposable test key; feed/archive verified, changed ZIP rejected, temporary key removed. |
+| Community ZIP/feed signatures | Published v0.2.0 ZIP/feed signed with the production Keychain key and verified; private key was not exported. Anonymous downloads match the verified files and the downloaded ZIP signature passes the public-key verifier. Earlier disposable-key tests rejected corrupted archives. |
 | Independent reviews | Access, localization, Slack and updater/release findings addressed; no material findings left in the latest reviews. |
 | Conversation changes | Immediate local GitHub-message insertion verified on the native demo board/full conversation; ⌘N still works and toolbar task button is absent. Slack stale-history protection and partial-placement reconciliation passed injected tests. |
 | Latest standard package | Refreshed design packaged with `./scripts/build-app.sh` using a staging app path, then installed while the standard app was stopped. Optimized build and deep strict signature passed. Restart restored the live account/project, all 12 items and Slack history after macOS Keychain approval. |
@@ -61,27 +65,27 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
 
 GitHub task/message mutations and Slack posting were verified with injected APIs
 and isolated native demos. They were not exercised against the user's real tasks
-or channel. The production Sparkle-key preview waited on Keychain access and was
-stopped. Production-key signing remains to be completed; the owner must handle
-any macOS approval.
+or channel. Production-key signing now succeeds through the existing Keychain
+account; the private key was neither exported nor changed.
 
-CI runs Swift tests, release tests and packaging on macOS, then uploads a ZIP.
-The public repository has been pushed; hosted CI and release verification are
-in progress. There is no separate lint or formatter command.
+Hosted macOS CI passed tests, release checks, optimized app packaging and ZIP
+artifact upload for release source `a189bc6`. Initial runs exposed a Swift 6.3.3
+compiler crash on bound main-actor Binding setters; explicit setter closures
+resolved it. Local Swift 6.4 had not exposed that crash. There is no separate
+lint or formatter command.
 
 ## Remaining work, in order
 
-1. Public-source review and publication are complete; check hosted CI.
-2. Own-client Slack setup and distribution limits are documented. Complete
-   distribution and test another workspace before offering the bundled client
-   generally; this is optional for users with their own client.
-3. The initial commit and GitHub remote are in place; finish binary release preparation.
-4. Complete Sparkle Keychain signing access; prepare and review the first signed
-   community release from clean committed source.
-5. Publish ZIP/appcast/checksum, verify the hosted URLs and test a fresh download
-   on another Mac or separate macOS test account.
-6. Move existing local installations to the first public build. Verify a subsequent
-   real update via the public feed on a separate test installation.
+1. Test a fresh public download on another Mac or separate macOS test account,
+   including first-launch approval, English/Norwegian and GitHub/Slack restoration.
+   Public transport and signature verification are complete; this is separate
+   from fresh-install acceptance.
+2. Move existing local installations to the public release if desired; development
+   builds do not check the public feed. Verify a subsequent real public update on
+   a separate test installation when a later release exists.
+3. Optional broader Slack distribution: own-client setup is documented, but the
+   bundled registration needs distribution and another-workspace verification
+   before it can be offered generally.
 
 See [PLAN.md](PLAN.md) for completion criteria and
 [Updates.md](Documentation/Updates.md) for release commands. Apple enrollment,
@@ -541,3 +545,29 @@ No Client Secret was generated. No private token is written to this repository.
 - Independent review found no material defects. Created the initial commit and
   pushed the reviewed files to the public GitHub repository. Hosted CI and
   production release preparation remain in progress; no fresh-install/public-update verification is claimed.
+
+
+### 2026-11-04 — First public community release
+
+- Published the MIT-licensed repository and community release v0.2.0/build 2 from
+  clean source `a189bc60124c4bccda80104f09e9dd6775044c9d`. The remote tag matches
+  that source. Hosted macOS CI run 41911644644 passed tests, release checks,
+  optimized packaging and ZIP artifact upload.
+- Fixed Swift 6.3.3 IRGen crashes in SwiftUI Binding setters using explicit
+  main-actor closures. Local full suite: 121 tests/14 suites passed; independent
+  review found no material defects. No test or compiler check was skipped.
+- Included the MIT and Sparkle licenses in the signed app resources. Made the
+  checksum portable by using the archive basename instead of the build path.
+- Production Keychain signing succeeded. ZIP and appcast signatures, version,
+  identity, updater mode, en/nb resources and framework symlink were verified.
+  No production private key was exported or changed.
+- Published ZIP, portable SHA-256 checksum and signed appcast. Anonymous HTTPS
+  downloads (including the latest feed URL) match the local verified artifacts;
+  downloaded ZIP checksum and Ed25519 signature pass. The downloaded ZIP was
+  extracted with ditto and its app passed deep strict code-signature verification.
+- README now links directly to the release and prominently explains built-in
+  GitHub draft chat, optional Slack and no Sprintwake server/database to host.
+  Screenshots use fictional demo data; the setup prompt leaves authorization
+  under the user's control and verifies connections without real test writes.
+- Remaining qualification: fresh install on another Mac/separate account, a later
+  public update, Intel/universal packaging and general bundled Slack distribution.

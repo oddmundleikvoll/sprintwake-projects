@@ -20,12 +20,12 @@ kontoer eller ekte Slack-meldinger.*
 
 ## Installer
 
-Krever **macOS 14 eller nyere**. Første nedlastbare utgivelse klargjøres;
-inntil videre kan du [bygge fra kildekoden](#bygg-og-start). Ferdige pakker vil
-ligge på [GitHub Releases](https://github.com/oddmundleikvoll/sprintwake-projects/releases).
-Den første pakken er for **Apple Silicon (arm64)**. Intel/universal er ikke kvalifisert.
+**[Last ned Sprintwake Projects 0.2.0](https://github.com/oddmundleikvoll/sprintwake-projects/releases/download/v0.2.0/Sprintwake-Projects-0.2.0.zip)**
+– **macOS 14+ · Apple Silicon (arm64)**.
+[Alle utgivelser og sjekksummer](https://github.com/oddmundleikvoll/sprintwake-projects/releases)
+· [Bygg fra kildekoden](#bygg-og-start). Intel/universal er ikke kvalifisert.
 
-Når pakken er tilgjengelig: last ned appens ZIP, pakk ut og dra
+Last ned appens ZIP, pakk ut og dra
 **Sprintwake Projects.app** til **Programmer**. Fellesskapsutgaven er ad hoc-signert
 og ikke Apple-notarisert. Ved blokkert første oppstart, se
 [Apples veiledning](https://support.apple.com/en-us/102445) og bruk
@@ -47,8 +47,10 @@ LLM-prompt for installasjon og oppsett av GitHub/Slack, samt flere skjermbilder.
 ## Prosjektstatus
 
 Versjon 0.2.0/build 2 er implementert og verifisert lokalt, inkludert valgfri Slack
-og signerte Sparkle-oppdateringer. Publisering og kontroll av fersk installasjon
-pågår. Se [dagens status](STATUS.md) og [prioritert plan](PLAN.md).
+og signerte Sparkle-oppdateringer. Kildekode og første fellesskapsutgave er offentlig
+publisert; macOS CI og kontroll av offentlige nedlastinger/signaturer består.
+Fersk installasjon på en annen Mac og en senere offentlig oppdatering gjenstår.
+Se [dagens status](STATUS.md) og [prioritert plan](PLAN.md).
 
 ## Bygg og start
 

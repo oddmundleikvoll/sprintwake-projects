@@ -6,11 +6,11 @@ if desired. GitHub and Slack content keeps its original language.
 
 ## Install the app
 
-The first binary release is being prepared. Until it is published, use the
-source instructions below. Published packages will be available on
-[GitHub Releases](https://github.com/oddmundleikvoll/sprintwake-projects/releases).
-The initial package targets Apple Silicon (arm64). Intel/universal packages
-have not been qualified. Check **Apple menu → About This Mac** for your processor.
+[Download Sprintwake Projects 0.2.0](https://github.com/oddmundleikvoll/sprintwake-projects/releases/download/v0.2.0/Sprintwake-Projects-0.2.0.zip),
+or view [all releases and checksums](https://github.com/oddmundleikvoll/sprintwake-projects/releases).
+The initial package targets Apple Silicon (arm64). Intel/universal packages have
+not been qualified. Check **Apple menu → About This Mac** for your processor.
+The source instructions below are available for local builds.
 
 1. Download the release's `Sprintwake-Projects-<version>.zip` app archive.
 2. Unzip it and drag **Sprintwake Projects.app** into **Applications**. Quit an
@@ -105,7 +105,7 @@ before other workspaces can install them.
 
 ## If setup fails
 
-- **No downloadable release:** build from source; do not use a source-code ZIP
+- **No compatible downloadable release:** build from source; do not use a source-code ZIP
   as an app package.
 - **Wrong processor or older macOS:** check the release requirements. The initial
   binary is arm64/macOS 14+; other packages are not qualified.

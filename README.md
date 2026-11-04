@@ -20,13 +20,12 @@ projects, accounts or Slack messages are shown.*
 
 ## Install
 
-**Requires macOS 14 or later.** The first downloadable release is being prepared;
-for now, [build from source](#build-from-source). Packaged downloads will appear
-on [GitHub Releases](https://github.com/oddmundleikvoll/sprintwake-projects/releases).
-The initial packaged build targets **Apple Silicon (arm64)**; Intel/universal
-packages have not been qualified.
+**[Download Sprintwake Projects 0.2.0](https://github.com/oddmundleikvoll/sprintwake-projects/releases/download/v0.2.0/Sprintwake-Projects-0.2.0.zip)**
+— **macOS 14+ · Apple Silicon (arm64)**.
+[All releases and checksums](https://github.com/oddmundleikvoll/sprintwake-projects/releases)
+· [Build from source](#build-from-source). Intel/universal packages have not been qualified.
 
-When a release is available:
+Install the app:
 
 1. Download the `Sprintwake-Projects-<version>.zip` app archive from Releases.
 2. Unzip it and drag **Sprintwake Projects.app** into **Applications**.
@@ -130,8 +129,10 @@ Optional Slack conversations, shown with local demo messages:
 ## Project status
 
 Version 0.2.0/build 2 includes GitHub boards, issues, drafts and project
-conversations, optional Slack, and signed Sparkle updates. Public release and
-fresh-install verification are in progress. See [current status](STATUS.md) and
+conversations, optional Slack, and signed Sparkle updates. Source and the first
+community release are public; macOS CI and public download/signature checks pass.
+Fresh installation on another Mac and a subsequent public update remain unverified.
+See [current status](STATUS.md) and
 the [ordered publication plan](PLAN.md) for verified scope and remaining work.
 
 The S-shaped trail represents work moving forward. Editable SVG logos and PNG app

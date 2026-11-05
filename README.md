@@ -132,6 +132,9 @@ Version 0.2.0/build 2 includes GitHub boards, issues, drafts and project
 conversations, optional Slack, and signed Sparkle updates. Source and the first
 community release are public; macOS CI and public download/signature checks pass.
 Fresh installation on another Mac and a subsequent public update remain unverified.
+The local source fixes issue/PR assignment failures with
+`Field 'id' doesn't exist on type 'Assignable'`; this correction is not in v0.2.0.
+The prepared 0.2.1/build 3 update is recorded in [CHANGELOG.md](CHANGELOG.md).
 See [current status](STATUS.md) and
 the [ordered publication plan](PLAN.md) for verified scope and remaining work.
 

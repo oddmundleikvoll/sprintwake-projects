@@ -1,18 +1,25 @@
 # Sprintwake Projects status
 
-Updated 2026-11-04. This snapshot is current; the historical record below retains
+Updated 2026-11-05. This snapshot is current; the historical record below retains
 earlier test counts, temporary blockers and superseded decisions. Continue from
 [PLAN.md](PLAN.md), not an older outstanding-work entry.
 
 ## Current snapshot
 
-- **App:** Sprintwake Projects 0.2.0, build 2, native macOS 14+, Swift 6/SwiftUI.
+- **App:** Sprintwake Projects 0.2.1, build 3, prepared for publication; native
+  macOS 14+, Swift 6/SwiftUI. Published download remains v0.2.0 until verification.
   Branding and the S logo are complete. English is the first-launch default;
   saved language choices are preserved. English and Norwegian Bokmål are selectable.
   Existing bundle ID, preferences, Keychain services and Swift modules are retained.
 - **GitHub:** board/list, projects, issues/drafts, assignments and conversations
   are implemented. The inaccessible-content defect was caused by repository
   authorization; same-account reauthorization restored all 12 live project items.
+- **Assignment correction:** local source fixes issue/PR add/remove failures with
+  `Field 'id' doesn't exist on type 'Assignable'`. The response now selects `id`
+  through `Node`. Both item kinds pass the schema regression and atomic-operation
+  tests. The published v0.2.0 download does not include this fix.
+  The correction and release history are recorded in `CHANGELOG.md`;
+  0.2.1/build 3 metadata is prepared for a signed public patch release.
 - **Latest requested changes:** refreshed workspace/sidebar, project heading,
   board cards, sign-in and conversation surfaces share a light/dark indigo palette.
   Column plus buttons and ⌘N remain; no top-right New task button was reintroduced.
@@ -30,12 +37,14 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
   verification and guarded install/relaunch are implemented. Community release
   preparation works without paid Apple membership. `--notarize` is optional.
 - **Local app:** `dist/Sprintwake Projects.app` contains the refreshed design,
-  shared discovery and earlier toolbar/conversation fixes. Optimized packaging
-  and deep strict signature verification passed. Isolated demo verification
+  shared discovery, earlier toolbar/conversation fixes and the assignment
+  correction. Optimized packaging and deep strict signature verification passed.
+  The stopped standard app was replaced and relaunched. After the user's macOS
+  Keychain approval, the saved account, selected project, all 12 items and Slack
+  history were restored. Earlier design verification
   covered light/dark appearance, default/minimum window sizing, search, board/list,
-  conversation sending and sign-in layout. After macOS Keychain approval, the
-  standard app restored the selected live project, all 12 items and Slack history
-  with the new design. Local builds have public update checks disabled.
+  conversation sending and sign-in layout, plus restoration of all 12 live items
+  and Slack history. Local builds have public update checks disabled.
 - **Publication:** source is public at
   [oddmundleikvoll/sprintwake-projects](https://github.com/oddmundleikvoll/sprintwake-projects)
   under the MIT License. README has installation/setup instructions, a copyable
@@ -53,6 +62,7 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
 | --- | --- |
 | `./scripts/test.sh` | 121 tests in 14 suites passed; optional real Keychain test skipped in this run. |
 | `./scripts/test-release.sh` | Passed community/notarized preflight, feed/key/metadata validation and valid/corrupt signature checks. |
+| Issue/PR assignment correction | Original schema error reproduced through a read-only GitHub query; the Node fragment is accepted. Focused assignment tests and full 121-test/14-suite run pass; no real assignment writes used. |
 | Community production package | Optimized ad hoc app built without Developer ID; public updater enabled, test mode off, deep strict signature and framework symlinks verified. |
 | Real GitHub/Slack reads and restart | Passed with all 12 project items, selected project/channel and Slack history restored; no new OAuth flow required. |
 | Language switching | Native demo retained unfinished text, selection and session while switching English/Norwegian; resources also worked outside the checkout. |
@@ -60,7 +70,7 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
 | Community ZIP/feed signatures | Published v0.2.0 ZIP/feed signed with the production Keychain key and verified; private key was not exported. Anonymous downloads match the verified files and the downloaded ZIP signature passes the public-key verifier. Earlier disposable-key tests rejected corrupted archives. |
 | Independent reviews | Access, localization, Slack and updater/release findings addressed; no material findings left in the latest reviews. |
 | Conversation changes | Immediate local GitHub-message insertion verified on the native demo board/full conversation; ⌘N still works and toolbar task button is absent. Slack stale-history protection and partial-placement reconciliation passed injected tests. |
-| Latest standard package | Refreshed design packaged with `./scripts/build-app.sh` using a staging app path, then installed while the standard app was stopped. Optimized build and deep strict signature passed. Restart restored the live account/project, all 12 items and Slack history after macOS Keychain approval. |
+| Latest standard package | Assignment correction packaged with `./scripts/build-app.sh` using a staging app path, then installed while the standard app was stopped. Optimized build and deep strict signature passed; packaged executable contains the corrected Node fragment. After the user's macOS Keychain approval, native restart restored the saved account, selected project, all 12 items and Slack history. No real assignment write was used. |
 | Design refresh | Native isolated demo passed dark/light visual checks, default/minimum sizing, search, board/list and local conversation send. Sign-in card checked in light appearance. Independent review found no material defects; increased-contrast styling is implemented but not manually exercised. |
 
 GitHub task/message mutations and Slack posting were verified with injected APIs
@@ -76,14 +86,16 @@ lint or formatter command.
 
 ## Remaining work, in order
 
-1. Test a fresh public download on another Mac or separate macOS test account,
+1. Publish and verify the prepared 0.2.1/build 3 assignment fix, including
+   `CHANGELOG.md`, hosted macOS CI and signed public assets.
+2. Test a fresh public download on another Mac or separate macOS test account,
    including first-launch approval, English/Norwegian and GitHub/Slack restoration.
    Public transport and signature verification are complete; this is separate
    from fresh-install acceptance.
-2. Move existing local installations to the public release if desired; development
+3. Move existing local installations to the public release if desired; development
    builds do not check the public feed. Verify a subsequent real public update on
    a separate test installation when a later release exists.
-3. Optional broader Slack distribution: own-client setup is documented, but the
+4. Optional broader Slack distribution: own-client setup is documented, but the
    bundled registration needs distribution and another-workspace verification
    before it can be offered generally.
 

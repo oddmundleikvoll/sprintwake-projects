@@ -9,8 +9,9 @@ Automatic installation and system-profile telemetry are disabled.
 
 ## Initial setup
 
-The public repository is `oddmundleikvoll/sprintwake-projects`, with community
-release `v0.2.0` (build 2). The build scripts prepare local artifacts; publishing
+The public repository is `oddmundleikvoll/sprintwake-projects`. Its first community
+release was `v0.2.0` (build 2); the 0.2.1/build 3 assignment correction is recorded
+in [CHANGELOG.md](../CHANGELOG.md). The build scripts prepare local artifacts; publishing
 is a separate manual step. Commit and push reviewed source before preparing
 later releases, and increase the build number for each public update.
 The [project plan](../PLAN.md) records publication and remaining fresh-install,
@@ -47,7 +48,8 @@ malware assessment. Ad hoc rebuilds may also prompt again for Keychain access.
 
 ## Prepare a release
 
-1. Update `version` and increment `build` in `Configuration/Release.json`.
+1. Update `version` and increment `build` in `Configuration/Release.json`, and
+   record the user-visible changes under that version/date in `CHANGELOG.md`.
 2. Commit the intended changes. The release script requires a clean committed tree.
 3. Prepare a community release:
 
@@ -90,6 +92,9 @@ the same non-draft, non-prerelease release. The client fetches:
 ```
 https://github.com/oddmundleikvoll/sprintwake-projects/releases/latest/download/appcast.xml
 ```
+
+Use the matching `CHANGELOG.md` entry for the release notes. For multiline notes,
+write the final text to a file and pass `--notes-file` to `gh release create`.
 
 Releases must increase the build number. Keep the public key/feed stable for
 installed clients. Builds currently target the host Mac architecture; Sparkle's

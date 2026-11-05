@@ -50,6 +50,9 @@ Versjon 0.2.0/build 2 er implementert og verifisert lokalt, inkludert valgfri Sl
 og signerte Sparkle-oppdateringer. Kildekode og første fellesskapsutgave er offentlig
 publisert; macOS CI og kontroll av offentlige nedlastinger/signaturer består.
 Fersk installasjon på en annen Mac og en senere offentlig oppdatering gjenstår.
+Den lokale kildekoden retter tildelingsfeilen
+`Field 'id' doesn't exist on type 'Assignable'` for issues/PR-er; rettingen er ikke med i v0.2.0.
+Den klargjorte oppdateringen 0.2.1/build 3 er beskrevet i [CHANGELOG.md](CHANGELOG.md).
 Se [dagens status](STATUS.md) og [prioritert plan](PLAN.md).
 
 ## Bygg og start

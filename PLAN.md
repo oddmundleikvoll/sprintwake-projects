@@ -1,10 +1,14 @@
 # Sprintwake Projects plan
 
-Updated 2026-11-04. [STATUS.md](STATUS.md) contains the current snapshot and dated
+Updated 2026-11-05. [STATUS.md](STATUS.md) contains the current snapshot and dated
 verification history. [CONTEXT.md](CONTEXT.md) records architecture and decisions.
 This plan records publication and the remaining distribution verification.
 
 ## Completed
+
+- [x] Fix issue/PR assignment schema validation by selecting the returned ID
+  through `Node`; cover atomic add/remove for both item kinds.
+- [x] Record the correction in `CHANGELOG.md` and prepare 0.2.1/build 3 metadata.
 
 - [x] Refresh the workspace, board cards, sign-in and conversation surfaces with
   a shared adaptive indigo palette and clearer visual hierarchy.
@@ -84,11 +88,13 @@ APIs and isolated demo fixtures, not real permission changes.
 
 ## Next: qualify fresh installation and future updates
 
-1. Test a fresh public download on another Mac or a separate macOS test account.
+1. Publish and verify the prepared 0.2.1/build 3 assignment correction using the
+   signed release process, including changelog notes, hosted CI and public assets.
+2. Test a fresh public download on another Mac or a separate macOS test account.
    Record first-launch approval and Keychain prompts, English/Norwegian, GitHub
    restoration and optional Slack. The published package is arm64/macOS 14+;
    Intel/universal distribution has not been qualified.
-2. Existing local users can install the first public release to receive future
+3. Existing local users can install the first public release to receive future
    updates; local development builds have public update checks disabled. When a
    later release exists, verify an actual public-feed update on a separate test
    installation, including download indicator, signatures and install/relaunch.

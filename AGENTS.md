@@ -12,6 +12,8 @@ The Swift package and Package.resolved are the source of truth.
 - Keep `PLAN.md` aligned with completed work and remaining release prerequisites.
   `CONTEXT.md` records durable architecture/decisions; README links to the current
   status and plan. Do not claim public publication from local/demo verification.
+- Record user-visible changes in `CHANGELOG.md` under the release version/date;
+  use that entry when writing GitHub release notes.
 
 ## Commands
 
@@ -88,6 +90,8 @@ reference can crash that compiler's IR generation; local Swift 6.4 masks it.
 - Issue/PR assignments use atomic add/remove. Draft assignments must read current
   IDs and fail closed if inaccessible; GitHub requires full-array replacement.
   Surface the remaining same-draft concurrency limitation in UI and docs.
+  The mutation's `Assignable` response has no `id` field; select it through a
+  `... on Node { id }` fragment.
 - Project deletion requires an explicit in-app confirmation with the project name.
   Exercise destructive workflows only in the isolated demo, never real projects.
 - A separate test bundle can set `FjordDemoMode=true` in Info.plist and use its own

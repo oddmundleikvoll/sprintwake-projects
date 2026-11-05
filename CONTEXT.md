@@ -87,6 +87,11 @@ assignableUsers. Issues/PRs use atomic add/remove-assignee mutations. DraftIssue
 only exposes full-array replacement; read current assignees immediately first,
 fail closed when the draft is inaccessible, and show the remaining concurrency
 limitation in the picker. No claim of a cross-client transaction is made.
+Issue/PR mutation responses select `id` through `... on Node { id }`: GitHub's
+`Assignable` interface does not expose `id` directly. The former direct selection
+failed schema validation before either add/remove mutation could execute.
+The correction is recorded under 0.2.1/build 3. `CHANGELOG.md` is the durable
+user-visible release history and supplies the GitHub release notes.
 
 The board and full conversation view share the conversation option preference,
 scoped by project and grouping field. The board renders drafts in that option as

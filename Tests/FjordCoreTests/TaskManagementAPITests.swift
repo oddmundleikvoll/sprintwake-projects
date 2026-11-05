@@ -33,17 +33,23 @@ struct TaskManagementAPITests {
         #expect(await transport.requests().count == 2)
     }
 
-    @Test func issueAssignmentUsesOnlyTheSelectedUserWithAtomicAddAndRemove() async throws {
+    @Test(arguments: [ProjectItem.Kind.issue, .pullRequest])
+    func repositoryItemAssignmentUsesValidResponseFieldsAndAtomicAddAndRemove(kind: ProjectItem.Kind) async throws {
         let transport = MockTransport { request, index in
             let payload = try body(request), query = try #require(payload["query"] as? String)
-            #expect(query.contains(index == 1 ? "addAssigneesToAssignable" : "removeAssigneesFromAssignable"))
+            let mutation = index == 1 ? "addAssigneesToAssignable" : "removeAssigneesFromAssignable"
+            #expect(query.contains(mutation))
             let vars = try #require(payload["variables"] as? [String: Any])
             #expect(vars["id"] as? String == "issue-content")
             #expect(vars["user"] as? String == "u1")
-            return jsonResponse(#"{"data":{}}"#)
+            // GitHub's Assignable interface has no id field; select it through Node.
+            guard query.contains("assignable { ... on Node { id } }") else {
+                return jsonResponse(#"{"errors":[{"message":"Field 'id' doesn't exist on type 'Assignable'"}]}"#)
+            }
+            return jsonResponse("{\"data\":{\"\(mutation)\":{\"assignable\":{\"id\":\"issue-content\"}}}}")
         }
         let client = GitHubClient(token: "fixture", transport: transport)
-        let issue = ProjectItem(id: "item", contentID: "issue-content", kind: .issue, title: "Issue", assigneeLogins: ["someone-else"])
+        let issue = ProjectItem(id: "item", contentID: "issue-content", kind: kind, title: "Task", assigneeLogins: ["someone-else"])
         let user = AssignableUser(id: "u1", login: "one")
         try await client.changeAssignee(item: issue, user: user, assigned: true)
         try await client.changeAssignee(item: issue, user: user, assigned: false)

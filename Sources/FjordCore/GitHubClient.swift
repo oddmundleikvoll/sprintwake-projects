@@ -420,7 +420,8 @@ public struct GitHubClient: ProjectsAPI {
         switch item.kind {
         case .issue, .pullRequest:
             let mutation = assigned ? "addAssigneesToAssignable" : "removeAssigneesFromAssignable"
-            let _: MutationData = try await graphQL("mutation($id: ID!, $user: ID!) { \(mutation)(input: {assignableId: $id, assigneeIds: [$user]}) { assignable { id } } }", ["id": .string(contentID), "user": .string(user.id)])
+            // Assignable has no id field; Issue and PullRequest expose it through Node.
+            let _: MutationData = try await graphQL("mutation($id: ID!, $user: ID!) { \(mutation)(input: {assignableId: $id, assigneeIds: [$user]}) { assignable { ... on Node { id } } } }", ["id": .string(contentID), "user": .string(user.id)])
         case .draft:
             let current: DraftAssigneesData = try await graphQL("query($id: ID!) { node(id: $id) { ... on DraftIssue { assignees(first: 100) { nodes { id } } } } }", ["id": .string(contentID)])
             guard let node = current.node else { throw noAccess() }

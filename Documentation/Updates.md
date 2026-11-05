@@ -9,8 +9,8 @@ Automatic installation and system-profile telemetry are disabled.
 
 ## Initial setup
 
-The public repository is `oddmundleikvoll/sprintwake-projects`. Its first community
-release was `v0.2.0` (build 2); the 0.2.1/build 3 assignment correction is recorded
+The public repository is `oddmundleikvoll/sprintwake-projects`. The latest community
+release is `v0.2.1` (build 3); the assignment correction is recorded
 in [CHANGELOG.md](../CHANGELOG.md). The build scripts prepare local artifacts; publishing
 is a separate manual step. Commit and push reviewed source before preparing
 later releases, and increase the build number for each public update.

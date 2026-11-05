@@ -6,20 +6,19 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
 
 ## Current snapshot
 
-- **App:** Sprintwake Projects 0.2.1, build 3, prepared for publication; native
-  macOS 14+, Swift 6/SwiftUI. Published download remains v0.2.0 until verification.
+- **App:** Sprintwake Projects 0.2.1, build 3, publicly released; native
+  macOS 14+, Swift 6/SwiftUI.
   Branding and the S logo are complete. English is the first-launch default;
   saved language choices are preserved. English and Norwegian Bokmål are selectable.
   Existing bundle ID, preferences, Keychain services and Swift modules are retained.
 - **GitHub:** board/list, projects, issues/drafts, assignments and conversations
   are implemented. The inaccessible-content defect was caused by repository
   authorization; same-account reauthorization restored all 12 live project items.
-- **Assignment correction:** local source fixes issue/PR add/remove failures with
+- **Assignment correction:** v0.2.1 fixes issue/PR add/remove failures with
   `Field 'id' doesn't exist on type 'Assignable'`. The response now selects `id`
   through `Node`. Both item kinds pass the schema regression and atomic-operation
-  tests. The published v0.2.0 download does not include this fix.
-  The correction and release history are recorded in `CHANGELOG.md`;
-  0.2.1/build 3 metadata is prepared for a signed public patch release.
+  tests. The correction and release history are recorded in `CHANGELOG.md`
+  and the matching public GitHub release notes.
 - **Latest requested changes:** refreshed workspace/sidebar, project heading,
   board cards, sign-in and conversation surfaces share a light/dark indigo palette.
   Column plus buttons and ⌘N remain; no top-right New task button was reintroduced.
@@ -38,7 +37,8 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
   preparation works without paid Apple membership. `--notarize` is optional.
 - **Local app:** `dist/Sprintwake Projects.app` contains the refreshed design,
   shared discovery, earlier toolbar/conversation fixes and the assignment
-  correction. Optimized packaging and deep strict signature verification passed.
+  correction (local 0.2.0/build 2). It was preserved during public 0.2.1 packaging.
+  Optimized packaging and deep strict signature verification passed.
   The stopped standard app was replaced and relaunched. After the user's macOS
   Keychain approval, the saved account, selected project, all 12 items and Slack
   history were restored. Earlier design verification
@@ -49,12 +49,12 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
   [oddmundleikvoll/sprintwake-projects](https://github.com/oddmundleikvoll/sprintwake-projects)
   under the MIT License. README has installation/setup instructions, a copyable
   LLM prompt and native screenshots with fictional isolated demo data only.
-  [Community release v0.2.0](https://github.com/oddmundleikvoll/sprintwake-projects/releases/tag/v0.2.0)
-  (build 2, arm64/macOS 14+) is public, with signed ZIP/appcast and a portable checksum.
-  [Hosted CI](https://github.com/oddmundleikvoll/sprintwake-projects/actions/runs/41911644644)
-  passed for release source `a189bc6`. Anonymous HTTPS downloads and the archive's
-  production-key signature were verified. Fresh installation on another Mac and
-  a subsequent update through the public feed remain unverified.
+  [Community release v0.2.1](https://github.com/oddmundleikvoll/sprintwake-projects/releases/tag/v0.2.1)
+  (build 3, arm64/macOS 14+) is public, with signed ZIP/appcast and a portable checksum.
+  [Hosted CI](https://github.com/oddmundleikvoll/sprintwake-projects/actions/runs/42042024414)
+  passed for release source `cff54d1`. Anonymous HTTPS downloads, checksum and
+  both archive/feed production-key signatures were verified. Fresh installation
+  on another Mac and a subsequent update through the public feed remain unverified.
 
 ## Latest verification evidence
 
@@ -67,7 +67,7 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
 | Real GitHub/Slack reads and restart | Passed with all 12 project items, selected project/channel and Slack history restored; no new OAuth flow required. |
 | Language switching | Native demo retained unfinished text, selection and session while switching English/Norwegian; resources also worked outside the checkout. |
 | Native updater installation | Disposable older/newer demo bundles completed signed loopback download, edit protection, replacement and relaunch. |
-| Community ZIP/feed signatures | Published v0.2.0 ZIP/feed signed with the production Keychain key and verified; private key was not exported. Anonymous downloads match the verified files and the downloaded ZIP signature passes the public-key verifier. Earlier disposable-key tests rejected corrupted archives. |
+| Community ZIP/feed signatures | Published v0.2.1 ZIP/feed signed with the existing production Keychain key; private key was not exported. Anonymous downloads and latest-feed URL match the local verified artifacts; downloaded checksum and both archive/feed signatures pass public-key verification. Earlier disposable-key tests rejected corrupted archives. |
 | Independent reviews | Access, localization, Slack and updater/release findings addressed; no material findings left in the latest reviews. |
 | Conversation changes | Immediate local GitHub-message insertion verified on the native demo board/full conversation; ⌘N still works and toolbar task button is absent. Slack stale-history protection and partial-placement reconciliation passed injected tests. |
 | Latest standard package | Assignment correction packaged with `./scripts/build-app.sh` using a staging app path, then installed while the standard app was stopped. Optimized build and deep strict signature passed; packaged executable contains the corrected Node fragment. After the user's macOS Keychain approval, native restart restored the saved account, selected project, all 12 items and Slack history. No real assignment write was used. |
@@ -79,23 +79,21 @@ or channel. Production-key signing now succeeds through the existing Keychain
 account; the private key was neither exported nor changed.
 
 Hosted macOS CI passed tests, release checks, optimized app packaging and ZIP
-artifact upload for release source `a189bc6`. Initial runs exposed a Swift 6.3.3
+artifact upload for release source `cff54d1`. Initial runs exposed a Swift 6.3.3
 compiler crash on bound main-actor Binding setters; explicit setter closures
 resolved it. Local Swift 6.4 had not exposed that crash. There is no separate
 lint or formatter command.
 
 ## Remaining work, in order
 
-1. Publish and verify the prepared 0.2.1/build 3 assignment fix, including
-   `CHANGELOG.md`, hosted macOS CI and signed public assets.
-2. Test a fresh public download on another Mac or separate macOS test account,
+1. Test a fresh public download on another Mac or separate macOS test account,
    including first-launch approval, English/Norwegian and GitHub/Slack restoration.
    Public transport and signature verification are complete; this is separate
    from fresh-install acceptance.
-3. Move existing local installations to the public release if desired; development
-   builds do not check the public feed. Verify a subsequent real public update on
-   a separate test installation when a later release exists.
-4. Optional broader Slack distribution: own-client setup is documented, but the
+2. Move existing local installations to the public release if desired; development
+   builds do not check the public feed. Verify the v0.2.0-to-v0.2.1 public update
+   on a separate test installation.
+3. Optional broader Slack distribution: own-client setup is documented, but the
    bundled registration needs distribution and another-workspace verification
    before it can be offered generally.
 
@@ -583,3 +581,24 @@ No Client Secret was generated. No private token is written to this repository.
   under the user's control and verifies connections without real test writes.
 - Remaining qualification: fresh install on another Mac/separate account, a later
   public update, Intel/universal packaging and general bundled Slack distribution.
+
+### 2026-11-05 — Assignment correction and public patch release
+
+- Reproduced `Field 'id' doesn't exist on type 'Assignable'` through a read-only
+  GitHub query. Issue/PR add/remove responses now select `id` through `Node`;
+  atomic operations and other assignees are preserved. The regression failed
+  before the fix and passes for both issues and pull requests afterward.
+- Full local verification passed: 121 tests/14 suites and release configuration
+  tests. Independent correctness/release reviews found no material defects.
+  No real GitHub task or Slack-message writes were used as tests.
+- Published v0.2.1/build 3 from `cff54d11e5016d438e565c1168f11065d11e2c51`,
+  with a matching annotated remote tag and passing hosted macOS CI run 42042024414.
+  Added `CHANGELOG.md`; its patch entry supplies the GitHub release notes.
+- Used the existing production Keychain signing key without exporting it.
+  Public ZIP/checksum/feed and latest-feed URL match the local signed artifacts.
+  Downloaded archive and feed signatures pass public-key verification; the
+  extracted app passes deep strict code-signature verification. ZIP SHA-256:
+  `16a7c77a5adf05dd21f2f459423dfa96d8b663444740f8ad3c8b6e1d8427edd4`.
+- Public package is arm64/macOS 14+, ad hoc signed with updater enabled, en/nb
+  resources and both licenses. The running local app was preserved. Fresh install
+  on another Mac and installation through the public feed remain unverified.

@@ -20,7 +20,7 @@ kontoer eller ekte Slack-meldinger.*
 
 ## Installer
 
-**[Last ned Sprintwake Projects 0.2.0](https://github.com/oddmundleikvoll/sprintwake-projects/releases/download/v0.2.0/Sprintwake-Projects-0.2.0.zip)**
+**[Last ned Sprintwake Projects 0.2.1](https://github.com/oddmundleikvoll/sprintwake-projects/releases/download/v0.2.1/Sprintwake-Projects-0.2.1.zip)**
 – **macOS 14+ · Apple Silicon (arm64)**.
 [Alle utgivelser og sjekksummer](https://github.com/oddmundleikvoll/sprintwake-projects/releases)
 · [Bygg fra kildekoden](#bygg-og-start). Intel/universal er ikke kvalifisert.
@@ -46,14 +46,12 @@ LLM-prompt for installasjon og oppsett av GitHub/Slack, samt flere skjermbilder.
 
 ## Prosjektstatus
 
-Versjon 0.2.0/build 2 er implementert og verifisert lokalt, inkludert valgfri Slack
-og signerte Sparkle-oppdateringer. Kildekode og første fellesskapsutgave er offentlig
+Versjon 0.2.1/build 3 inkluderer valgfri Slack og signerte Sparkle-oppdateringer.
+Den retter tildelingsfeilen `Field 'id' doesn't exist on type 'Assignable'`
+for issues og pull requests. Kildekode og signert fellesskapsutgave er offentlig
 publisert; macOS CI og kontroll av offentlige nedlastinger/signaturer består.
 Fersk installasjon på en annen Mac og en senere offentlig oppdatering gjenstår.
-Den lokale kildekoden retter tildelingsfeilen
-`Field 'id' doesn't exist on type 'Assignable'` for issues/PR-er; rettingen er ikke med i v0.2.0.
-Den klargjorte oppdateringen 0.2.1/build 3 er beskrevet i [CHANGELOG.md](CHANGELOG.md).
-Se [dagens status](STATUS.md) og [prioritert plan](PLAN.md).
+Se [CHANGELOG.md](CHANGELOG.md), [dagens status](STATUS.md) og [prioritert plan](PLAN.md).
 
 ## Bygg og start
 

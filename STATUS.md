@@ -6,7 +6,7 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
 
 ## Current snapshot
 
-- **App:** Sprintwake Projects 0.3.0, build 4, prepared for publication; native
+- **App:** Sprintwake Projects 0.3.0, build 4, publicly released; native
   macOS 14+, Swift 6/SwiftUI.
   Branding and the S logo are complete. English is the first-launch default;
   saved language choices are preserved. English and Norwegian Bokmål are selectable.
@@ -19,13 +19,13 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
   through `Node`. Both item kinds pass the schema regression and atomic-operation
   tests. The correction and release history are recorded in `CHANGELOG.md`
   and the matching public GitHub release notes.
-- **Board ordering (0.3.0 preparation):** column headings now support local
+- **Board ordering (0.3.0):** column headings now support local
   account/project/grouping-scoped order; card drops save GitHub project priority
   order within or between columns. Context menus offer column left/right and
   card up/down actions. Cross-column partial success is retained, field updates
   require a matching confirmed item ID, and stale drag contexts are rejected.
   Conversation messages keep chronological presentation. The standard local
-  package has been rebuilt. Version 0.3.0/build 4 is being prepared for publication.
+  package is installed and version 0.3.0/build 4 is published with matching source.
   Native menu actions passed in the isolated demo at default/expanded sizes.
   Simulated mouse drags did not establish a successful gesture: drag/drop and
   minimum-size visual qualification remain unverified and must not be claimed.
@@ -47,24 +47,24 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
   preparation works without paid Apple membership. `--notarize` is optional.
 - **Local app:** one canonical 0.3.0/build 4 app is installed in
   `~/Applications/Sprintwake Projects.app`, with the release updater enabled.
-  Twenty-one redundant old, extracted and demo app bundles were moved to Trash
-  and unregistered from LaunchServices; Sprintwake Studios is a separate app and
-  was preserved. The old app was closed after checking for unfinished edits.
-  New optimized packaging, updater protections and deep strict signature pass;
-  relaunch and final public-asset verification are pending. Development builds
-  and isolated demos still have public update checks disabled.
-- **Publication:** source is public at
+  Twenty-one old/extracted/demo copies and two temporary release-verification
+  bundles were moved to Trash. LaunchServices has exactly one live Projects
+  registration outside Trash; the separate Sprintwake Studios app was preserved. The old app
+  was closed after checking for unfinished edits. The installed executable,
+  metadata and en/nb resources match the public release. After the user approved
+  the macOS Keychain prompt, GitHub session/project and Slack history restored.
+  Optimized packaging, updater protections and deep strict signature pass.
+  Development builds and isolated demos still have public update checks disabled.
+- **Publication:** reviewed source is public at
   [oddmundleikvoll/sprintwake-projects](https://github.com/oddmundleikvoll/sprintwake-projects)
-  under the MIT License. README has installation/setup instructions, a copyable
-  LLM prompt and native screenshots with fictional isolated demo data only.
-  The last verified public release is
-  [v0.2.1](https://github.com/oddmundleikvoll/sprintwake-projects/releases/tag/v0.2.1).
-  Version 0.3.0/build 4 (arm64/macOS 14+) is being prepared with signed ZIP/appcast
-  and a portable checksum.
-  [Hosted CI](https://github.com/oddmundleikvoll/sprintwake-projects/actions/runs/42042024414)
-  passed for release source `cff54d1`. Anonymous HTTPS downloads, checksum and
-  both archive/feed production-key signatures were verified. Fresh installation
-  on another Mac and a subsequent update through the public feed remain unverified.
+  under the MIT License. [Community release v0.3.0](https://github.com/oddmundleikvoll/sprintwake-projects/releases/tag/v0.3.0)
+  (build 4, arm64/macOS 14+) is public with changelog release notes, signed
+  ZIP/appcast and a portable checksum. Release source is `4589f25`, with a matching
+  annotated remote tag and passing [hosted macOS CI](https://github.com/oddmundleikvoll/sprintwake-projects/actions/runs/42198953078).
+  Anonymous downloads and the latest-feed URL match the local signed assets;
+  archive/feed signatures and the extracted app's deep strict code signature pass.
+  Fresh installation on another Mac, public-feed installation and native mouse
+  drag/drop qualification remain unverified.
 
 ## Latest verification evidence
 
@@ -74,13 +74,13 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
 | `./scripts/test-release.sh` | Passed community/notarized preflight, feed/key/metadata validation and valid/corrupt signature checks. |
 | Issue/PR assignment correction | Original schema error reproduced through a read-only GitHub query; the Node fragment is accepted. Focused assignment tests and full 121-test/14-suite run pass; no real assignment writes used. |
 | Community production package | Optimized ad hoc app built without Developer ID; public updater enabled, test mode off, deep strict signature and framework symlinks verified. |
-| Real GitHub/Slack reads and restart | Passed with all 12 project items, selected project/channel and Slack history restored; no new OAuth flow required. |
+| Real GitHub/Slack reads and restart | Canonical 0.3.0 app restored the saved account, selected project/channel and Slack history after the user approved the macOS Keychain prompt; no new OAuth flow or real test writes required. |
 | Language switching | Native demo retained unfinished text, selection and session while switching English/Norwegian; resources also worked outside the checkout. |
 | Native updater installation | Disposable older/newer demo bundles completed signed loopback download, edit protection, replacement and relaunch. |
-| Community ZIP/feed signatures | Published v0.2.1 ZIP/feed signed with the existing production Keychain key; private key was not exported. Anonymous downloads and latest-feed URL match the local verified artifacts; downloaded checksum and both archive/feed signatures pass public-key verification. Earlier disposable-key tests rejected corrupted archives. |
+| Community ZIP/feed signatures | Public v0.3.0 ZIP/feed use the unchanged production public key; private key was not exported. Anonymous assets/latest feed match local artifacts, and downloaded checksum plus archive/feed signatures pass public-key verification. Earlier disposable-key tests rejected corrupted archives. |
 | Independent reviews | Access, localization, Slack and updater/release findings addressed; no material findings left in the latest reviews. |
 | Conversation changes | Immediate local GitHub-message insertion verified on the native demo board/full conversation; ⌘N still works and toolbar task button is absent. Slack stale-history protection and partial-placement reconciliation passed injected tests. |
-| Latest standard package | `./scripts/build-app.sh` passed with the standard app stopped. Deep strict signature, both exported drag types and en/nb resources passed independent verification. No live app launch, credentials or real writes were used. |
+| Latest standard package | Optimized 0.3.0/build 4 installed in the user Applications folder; deep strict signature and updater safeguards pass. Executable, metadata and en/nb strings match the downloaded release. GitHub and Slack restored after the user approved macOS Keychain access; no real task/message writes were used. |
 | Board ordering | 13 new tests cover GraphQL confirmation, before/after and empty/unassigned/ungrouped moves, filtered-card predecessors, partial failure, failed reload, logout and account/project/field/demo isolation. Native card up/column right menu actions passed in the isolated demo; actual mouse drag/drop and minimum-size layout remain unverified. |
 | Design refresh | Native isolated demo passed dark/light visual checks, default/minimum sizing, search, board/list and local conversation send. Sign-in card checked in light appearance. Independent review found no material defects; increased-contrast styling is implemented but not manually exercised. |
 
@@ -90,22 +90,22 @@ or channel. Production-key signing now succeeds through the existing Keychain
 account; the private key was neither exported nor changed.
 
 Hosted macOS CI passed tests, release checks, optimized app packaging and ZIP
-artifact upload for release source `cff54d1`. Initial runs exposed a Swift 6.3.3
+artifact upload for release source `4589f25`. Initial runs exposed a Swift 6.3.3
 compiler crash on bound main-actor Binding setters; explicit setter closures
 resolved it. Local Swift 6.4 had not exposed that crash. There is no separate
 lint or formatter command.
 
 ## Remaining work, in order
 
-- Publish the reviewed 0.3.0/build 4 source and signed artifacts, then verify
-  public downloads and relaunch the canonical user Applications installation.
+- Manually qualify column/card drag gestures at default/minimum window sizes
+  in the isolated demo; native move-menu actions and state/API tests already pass.
 
 1. Test a fresh public download on another Mac or separate macOS test account,
    including first-launch approval, English/Norwegian and GitHub/Slack restoration.
    Public transport and signature verification are complete; this is separate
    from fresh-install acceptance.
 2. Move existing local installations to the public release if desired; development
-   builds do not check the public feed. Verify the v0.2.0-to-v0.2.1 public update
+   builds do not check the public feed. Verify a prior-release-to-v0.3.0 public update
    on a separate test installation.
 3. Optional broader Slack distribution: own-client setup is documented, but the
    bundled registration needs distribution and another-workspace verification
@@ -637,3 +637,28 @@ No Client Secret was generated. No private token is written to this repository.
   a task and a column; default and expanded dark layouts were inspected.
   Automated mouse drags did not yield a confirmed drop, so gesture and minimum
   window-size qualification remain open. The feature has not been published.
+
+### 2026-11-06 — Published 0.3.0 and consolidated the local app
+
+- Published v0.3.0/build 4 from `4589f253a26677f8c4412ff09c56c106ac58feb0`
+  with matching annotated remote tag, CHANGELOG.md release notes and passing
+  hosted macOS CI run 42198953078 (tests, release checks, packaging and artifact).
+  Source, README download links and installation/update guides target 0.3.0.
+- Used the existing production Keychain signing key without exporting it.
+  Anonymous ZIP/checksum/appcast and latest-feed downloads match local assets;
+  portable SHA-256, archive/feed public-key signatures and the downloaded app's
+  deep strict code signature pass. ZIP SHA-256:
+  `315b5b82fcf992ad9b0b06dafc3242ea7c8f4e480f51bf26a8937cc310abaa69`.
+- Installed one release app in the user Applications folder and moved 21 old,
+  extracted and demo app bundles plus two temporary verification app bundles
+  to recoverable Trash. Targeted unregistering leaves exactly one live Projects
+  LaunchServices registration outside Trash; Sprintwake Studios was preserved.
+- Checked the old app for unfinished edits before quitting. New canonical app
+  starts with the saved GitHub session/project and Slack channel/history after
+  the user's macOS Keychain approval. Installed executable/Info.plist/en/nb
+  resources match the downloaded release; no real task or message writes used.
+- Fresh 134-test/16-suite and release-configuration runs pass (optional real
+  Keychain test skipped). Independent review found documentation links/current
+  version wording to correct; these were fixed before publishing. Manual mouse
+  gestures/minimum-size layout, another-Mac installation and a public-feed
+  installation remain unverified; release notes state those limits.

@@ -8,9 +8,12 @@ This plan records publication and the remaining distribution verification.
 
 - [x] Implement local column drag order and GitHub-backed card priority order,
   with keyboard-accessible menu alternatives, partial-success preservation and
-  stale-drop/session guards. Preparing 0.3.0/build 4 for publication.
-- [x] Consolidate 21 redundant Projects/Fjord/QA bundles into one canonical
-  user Applications installation, with recoverable Trash cleanup; preserve Studios.
+  stale-drop/session guards. Published in 0.3.0/build 4.
+- [x] Consolidate 21 old Projects/Fjord/QA copies and two temporary verification
+  bundles into one canonical user Applications installation, with recoverable
+  Trash cleanup; preserve Studios. Saved GitHub/Slack sessions restored.
+- [x] Publish 0.3.0/build 4 with matching tag/source/changelog, passing hosted CI
+  and anonymously verified signed assets, checksum and latest feed.
 
 - [x] Fix issue/PR assignment schema validation by selecting the returned ID
   through `Node`; cover atomic add/remove for both item kinds.
@@ -100,14 +103,13 @@ APIs and isolated demo fixtures, not real permission changes.
   local verified artifacts. Downloaded ZIP checksum/Ed25519 signature and the
   extracted app's deep strict code signature pass.
 
-## Next: publish 0.3.0 and consolidate the local installation
+## Remaining native qualification
 
-1. Publish 0.3.0/build 4 using its CHANGELOG.md entry; verify hosted CI, signed
-   assets and public downloads. Relaunch the installed canonical app and confirm
-   its version and normal startup; complete cleanup of temporary release staging.
-2. Record the scope of native gesture/layout verification accurately. Native move
-   menus, state/API tests and packaging pass; mouse drag/drop and minimum-size
-   visual qualification are not yet established. Do not claim those checks passed.
+1. Manually exercise column/card drag gestures at default and minimum window
+   sizes in the isolated demo, in both appearances. Native move-menu actions,
+   state/API tests, optimized packaging and public signatures pass; simulated
+   mouse drags did not establish a successful gesture. Release notes disclose
+   the unverified scope. Do not claim this qualification is complete.
 
 ## Remaining distribution qualification
 
@@ -117,7 +119,7 @@ APIs and isolated demo fixtures, not real permission changes.
    Intel/universal distribution has not been qualified.
 2. Existing local users can install the current public release to receive future
    updates; local development builds have public update checks disabled. With
-   v0.2.1 available, verify an actual public-feed update on a separate test
+   v0.3.0 available, verify an actual public-feed update on a separate test
    installation, including download indicator, signatures and install/relaunch.
 
 ## Optional later work

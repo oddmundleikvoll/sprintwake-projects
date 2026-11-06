@@ -9,9 +9,8 @@ Automatic installation and system-profile telemetry are disabled.
 
 ## Initial setup
 
-The public repository is `oddmundleikvoll/sprintwake-projects`. Release metadata
-targets `v0.3.0` (build 4), adding column/card ordering. Publication is pending;
-the last verified public release is `v0.2.1` (build 3). Changes are recorded
+The public repository is `oddmundleikvoll/sprintwake-projects`. The latest community
+release is `v0.3.0` (build 4), adding column/card ordering. Changes are recorded
 in [CHANGELOG.md](../CHANGELOG.md). The build scripts prepare local artifacts; publishing
 is a separate manual step. Commit and push reviewed source before preparing
 later releases, and increase the build number for each public update.

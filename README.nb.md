@@ -50,8 +50,9 @@ Versjon 0.3.0/build 4 legger til lokal kolonnerekkefølge og kortrekkefølge lag
 på GitHub, med flyttemenyer og bevaring av delvis fullførte flyttinger. Valgfri
 Slack og signerte Sparkle-oppdateringer er fortsatt inkludert.
 Den retter tildelingsfeilen `Field 'id' doesn't exist on type 'Assignable'`
-for issues og pull requests. Kildekoden er offentlig; utgivelsen 0.3.0 klargjøres
-med signert apparkiv og oppdatert changelog. Verifisert omfang står i STATUS.md.
+for issues og pull requests. Kildekode og signert fellesskapsutgave er offentlig
+publisert; GitHubs macOS-bygg, sjekksum og offentlige oppdateringssignaturer består.
+Verifisert omfang og gjenstående kontroll av dra-og-slipp står i STATUS.md.
 Fersk installasjon på en annen Mac og en senere offentlig oppdatering gjenstår.
 Se [CHANGELOG.md](CHANGELOG.md), [dagens status](STATUS.md) og [prioritert plan](PLAN.md).
 

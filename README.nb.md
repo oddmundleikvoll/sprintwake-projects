@@ -20,7 +20,7 @@ kontoer eller ekte Slack-meldinger.*
 
 ## Installer
 
-**[Last ned Sprintwake Projects 0.2.1](https://github.com/oddmundleikvoll/sprintwake-projects/releases/download/v0.2.1/Sprintwake-Projects-0.2.1.zip)**
+**[Last ned Sprintwake Projects 0.3.0](https://github.com/oddmundleikvoll/sprintwake-projects/releases/download/v0.3.0/Sprintwake-Projects-0.3.0.zip)**
 – **macOS 14+ · Apple Silicon (arm64)**.
 [Alle utgivelser og sjekksummer](https://github.com/oddmundleikvoll/sprintwake-projects/releases)
 · [Bygg fra kildekoden](#bygg-og-start). Intel/universal er ikke kvalifisert.
@@ -46,10 +46,12 @@ LLM-prompt for installasjon og oppsett av GitHub/Slack, samt flere skjermbilder.
 
 ## Prosjektstatus
 
-Versjon 0.2.1/build 3 inkluderer valgfri Slack og signerte Sparkle-oppdateringer.
+Versjon 0.3.0/build 4 legger til lokal kolonnerekkefølge og kortrekkefølge lagret
+på GitHub, med flyttemenyer og bevaring av delvis fullførte flyttinger. Valgfri
+Slack og signerte Sparkle-oppdateringer er fortsatt inkludert.
 Den retter tildelingsfeilen `Field 'id' doesn't exist on type 'Assignable'`
-for issues og pull requests. Kildekode og signert fellesskapsutgave er offentlig
-publisert; macOS CI og kontroll av offentlige nedlastinger/signaturer består.
+for issues og pull requests. Kildekoden er offentlig; utgivelsen 0.3.0 klargjøres
+med signert apparkiv og oppdatert changelog. Verifisert omfang står i STATUS.md.
 Fersk installasjon på en annen Mac og en senere offentlig oppdatering gjenstår.
 Se [CHANGELOG.md](CHANGELOG.md), [dagens status](STATUS.md) og [prioritert plan](PLAN.md).
 
@@ -147,7 +149,14 @@ nøkkelringtilgang igjen fordi signaturen er endret. Passord skrives bare i macO
   Issues/PR-er bruker separate legg til/fjern-operasjoner. Utkast krever hele
   tildelingslisten: appen leser ferske verdier først, men samtidige endringer på
   samme utkast kan fortsatt overskrive hverandre. Dette vises også i tildelingsvinduet.
-- Dra kort mellom kolonner eller velg status fra listen/oppgavevinduet.
+- Dra kort mellom kolonner eller på øvre/nedre halvdel av et annet kort for å
+  plassere dem foran/etter det. Kortrekkefølgen lagres som prosjektprioritet på
+  GitHub; en GitHub-visning med egen sortering kan vise en annen rekkefølge.
+  Høyreklikk et kort for «Flytt opp» / «Flytt ned». Statusmenyene fungerer fortsatt.
+- Dra kolonneoverskriften til venstre/høyre halvdel av en annen overskrift for å
+  plassere kolonnen foran/etter den. Kolonnemenyen har også flytting til venstre/høyre.
+  Kolonnerekkefølgen lagres på denne Macen per konto, prosjekt og grupperingsfelt.
+  GitHubs feltvalg endres ikke. Samtalemeldinger beholder tidsrekkefølgen.
   En tom «uten status»-gruppe vises ikke. «Mangler status» vises bare når faktiske
   oppgaver mangler en verdi; oppgavene beholdes og kan flyttes til en kolonne.
 - Rediger tittel/beskrivelse på utkast, issues og PR-er når GitHub gir skrivetilgang.

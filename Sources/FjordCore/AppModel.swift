@@ -16,6 +16,7 @@ public final class AppModel {
     public private(set) var snapshot: ProjectSnapshot?
     public private(set) var selectedFieldID: String?
     public private(set) var conversationOptionID: String?
+    public private(set) var columnOrder: [String] = []
     public private(set) var challenge: DeviceChallenge?
     public private(set) var isRestoring = true
     public private(set) var isAuthenticating = false
@@ -50,6 +51,7 @@ public final class AppModel {
     @ObservationIgnored private var sharedDiscoveryTask: Task<SharedProjectDiscovery, Error>?
     private var demoLinkedURLs: [String] = []
     private var demoSeenSharedIDs = Set<String>()
+    private var demoColumnOrders: [String: [String]] = [:]
     @ObservationIgnored private var authTask: Task<Void, Never>?
     private var hasStarted = false
 
@@ -65,6 +67,30 @@ public final class AppModel {
     public var canWrite: Bool { snapshot?.canUpdate == true && !isMutating && !isLoadingProject && !isAuthenticating }
     public var inaccessibleItemCount: Int { snapshot?.items.filter { $0.kind == .redacted }.count ?? 0 }
     public var conversationOption: SelectOption? { selectedField?.options.first { $0.id == conversationOptionID } }
+    public var boardDragID: String { "\(sessionGeneration).\(projectGeneration).\(selectedFieldID ?? "")" }
+
+    public func boardColumns(items: [ProjectItem]) -> [BoardColumn] {
+        guard let field = selectedField else { return [] }
+        return BoardGrouping.columns(field: field, items: items, order: columnOrder)
+    }
+
+    /// Column layout is local: replacing GitHub's option list can destroy concurrent edits.
+    @discardableResult public func moveColumn(projectID: String, fieldID: String, columnID: String,
+                                               targetID: String, before: Bool) -> Bool {
+        guard !isLoadingProject, !isMutating, selectedProjectID == projectID,
+              let field = selectedField, field.id == fieldID, let snapshot,
+              columnID != targetID else { return false }
+        var ids = BoardGrouping.columns(field: field, items: snapshot.items, order: columnOrder).map(\.id)
+        guard ids.contains(columnID), ids.contains(targetID) else { return false }
+        ids.removeAll { $0 == columnID }
+        guard let target = ids.firstIndex(of: targetID) else { return false }
+        ids.insert(columnID, at: before ? target : target + 1)
+        columnOrder = ids
+        let key = columnOrderPreference(projectID: projectID, fieldID: fieldID)
+        if isDemo { demoColumnOrders[key] = ids }
+        else { preferences.set(ids, forKey: key) }
+        return true
+    }
 
     public func setConversationOption(_ id: String) {
         guard selectedField?.options.contains(where: { $0.id == id }) == true, let projectID = selectedProjectID else { return }
@@ -170,6 +196,7 @@ public final class AppModel {
             user = nil; owners = []; selectedOwner = nil; projects = []; selectedProjectID = nil
             clearSharedProjects()
             snapshot = nil; selectedFieldID = nil; conversationOptionID = nil; lastSync = nil; isDemo = false; demoAPI = nil
+            columnOrder = []; demoColumnOrders = [:]
             if !leavingDemo { hasSavedSession = false }
             isLoadingProject = false; isLoadingProjects = false; isMutating = false; isRestoring = false
             errorMessage = nil; notice = nil; noticeURL = nil
@@ -274,6 +301,7 @@ public final class AppModel {
         projectGeneration = UUID()
         selectedOwner = owner; projects = []; selectedProjectID = nil; snapshot = nil
         selectedFieldID = nil; conversationOptionID = nil; lastSync = nil; isLoadingProject = false
+        columnOrder = []
         isLoadingProjects = true; errorMessage = nil; notice = nil
         defer { if ownerGeneration == generation { isLoadingProjects = false } }
         do {
@@ -298,6 +326,7 @@ public final class AppModel {
         let expected = sessionGeneration
         let generation = UUID(); projectGeneration = generation
         selectedProjectID = project.id; snapshot = nil; selectedFieldID = nil; conversationOptionID = nil; lastSync = nil
+        columnOrder = []
         isLoadingProject = true; errorMessage = nil; notice = nil
         defer { if generation == projectGeneration { isLoadingProject = false } }
         do {
@@ -337,10 +366,12 @@ public final class AppModel {
     }
 
     public func setGrouping(_ id: String) {
+        guard !isMutating else { return }
         guard snapshot?.fields.contains(where: { $0.id == id }) == true else { return }
         selectedFieldID = id
         if let id = snapshot?.project.id { preferences.set(selectedFieldID, forKey: "field.\(id)") }
         restoreConversationOption()
+        restoreColumnOrder()
     }
 
     public func refresh() async {
@@ -366,6 +397,52 @@ public final class AppModel {
             guard let index = self.snapshot?.items.firstIndex(where: { $0.id == itemID }) else { return }
             self.snapshot?.items[index].selections[field.id] = optionID
         })
+    }
+
+    @discardableResult public func moveItem(projectID: String, fieldID: String?, itemID: String,
+                                            optionID: String?, targetItemID: String? = nil, before: Bool = false) async -> Bool {
+        guard canWrite, let snapshot, snapshot.project.id == projectID, selectedFieldID == fieldID,
+              let item = snapshot.items.first(where: { $0.id == itemID }), itemID != targetItemID else { return false }
+        let field = selectedField
+        guard optionID == nil || field?.options.contains(where: { $0.id == optionID }) == true else { return false }
+        let columnItems: [ProjectItem]
+        if let field {
+            columnItems = BoardGrouping.columns(field: field, items: snapshot.items).first { $0.option?.id == optionID }?.items ?? []
+        } else { columnItems = snapshot.items }
+        var remaining = columnItems.filter { $0.id != itemID }
+        let insertion: Int
+        if let targetItemID {
+            guard let index = remaining.firstIndex(where: { $0.id == targetItemID }) else { return false }
+            insertion = before ? index : index + 1
+        } else { insertion = remaining.count }
+        let afterID = insertion > 0 ? remaining[insertion - 1].id : nil
+        remaining.insert(item, at: insertion)
+        let changesStatus = field.map { item.selections[$0.id] != optionID } ?? false
+        // Conversation drafts are displayed chronologically, rather than by task priority.
+        let chronological = optionID != nil && optionID == conversationOptionID && item.kind == .draft
+        if !changesStatus, chronological || remaining.map(\.id) == columnItems.map(\.id) { return true }
+        let expected = sessionGeneration, generation = projectGeneration
+        var statusConfirmed = false
+        let success = await mutate(projectID: projectID, operation: { api in
+            if changesStatus, let field {
+                try await api.setSelection(projectID: projectID, itemID: itemID, fieldID: field.id, optionID: optionID)
+                guard expected == self.sessionGeneration, generation == self.projectGeneration else { return }
+                statusConfirmed = true
+                if let index = self.snapshot?.items.firstIndex(where: { $0.id == itemID }) {
+                    self.snapshot?.items[index].selections[field.id] = optionID
+                }
+            }
+            guard expected == self.sessionGeneration, generation == self.projectGeneration else { return }
+            if !chronological { try await api.moveItem(projectID: projectID, itemID: itemID, afterID: afterID) }
+        }, confirmed: {
+            guard !chronological, let items = self.snapshot?.items else { return }
+            self.snapshot?.items = BoardOrdering.moving(items, itemID: itemID, afterID: afterID)
+            self.lastSync = Date()
+        })
+        if !success, statusConfirmed, expected == sessionGeneration, generation == projectGeneration, self.snapshot != nil {
+            notice = L10n.core("The task moved to the column, but its order could not be confirmed. Refresh before moving it again.")
+        }
+        return success
     }
 
     @discardableResult public func saveItem(projectID: String, original: ProjectItem, title: String, body: String) async -> Bool {
@@ -612,6 +689,17 @@ public final class AppModel {
         if let index = projects.firstIndex(where: { $0.id == loaded.project.id }) { projects[index] = loaded.project }
         if let index = sharedProjects.firstIndex(where: { $0.id == loaded.project.id }) { sharedProjects[index] = loaded.project }
         restoreConversationOption()
+        restoreColumnOrder()
+    }
+
+    private func columnOrderPreference(projectID: String, fieldID: String) -> String {
+        "boardColumns.\(user?.nodeID ?? user?.login.lowercased() ?? "").\(projectID).\(fieldID)"
+    }
+
+    private func restoreColumnOrder() {
+        guard let projectID = selectedProjectID, let fieldID = selectedFieldID else { columnOrder = []; return }
+        let key = columnOrderPreference(projectID: projectID, fieldID: fieldID)
+        columnOrder = isDemo ? demoColumnOrders[key] ?? [] : preferences.stringArray(forKey: key) ?? []
     }
 
     private func conversationPreference(_ projectID: String) -> String { "chatColumn.\(projectID).\(selectedFieldID ?? "")" }
@@ -685,6 +773,7 @@ public final class AppModel {
             user = nil; snapshot = nil; projects = []; owners = []; selectedOwner = nil; selectedProjectID = nil
             clearSharedProjects()
             selectedFieldID = nil; conversationOptionID = nil; hasSavedSession = false; isRestoring = false
+            columnOrder = []
             isLoadingProjects = false; isLoadingProject = false; isMutating = false
         }
         errorMessage = error.localizedDescription

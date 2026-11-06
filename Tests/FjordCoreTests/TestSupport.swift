@@ -82,6 +82,10 @@ actor WorkspaceAPI: ProjectsAPI {
     var creationWarning: String?
     var chatPlacementWarning: String?
     var chatPlacedDespiteWarning = false
+    var positionError: FjordError?
+    var positionGate: Gate?
+    var selectionGate: Gate?
+    var positionRequests: [(itemID: String, afterID: String?)] = []
     let gate: Gate?
     let gatedProject: String?
     let creationGate: Gate?
@@ -136,10 +140,24 @@ actor WorkspaceAPI: ProjectsAPI {
         return try #require(data.first { $0.project.id == project.id })
     }
     func setSelection(projectID: String, itemID: String, fieldID: String, optionID: String?) async throws {
+        await selectionGate?.wait()
         if let writeError { throw writeError }
         writeCount += 1
         if let p = data.firstIndex(where: { $0.project.id == projectID }), let i = data[p].items.firstIndex(where: { $0.id == itemID }) {
             data[p].items[i].selections[fieldID] = optionID
+        }
+    }
+    func configurePosition(error: FjordError? = nil, gate: Gate? = nil, selectionGate: Gate? = nil) {
+        positionError = error; positionGate = gate; self.selectionGate = selectionGate
+    }
+    func positions() -> [(itemID: String, afterID: String?)] { positionRequests }
+    func moveItem(projectID: String, itemID: String, afterID: String?) async throws {
+        positionRequests.append((itemID, afterID))
+        await positionGate?.wait()
+        if let error = positionError ?? writeError { throw error }
+        writeCount += 1
+        if let index = data.firstIndex(where: { $0.project.id == projectID }) {
+            data[index].items = BoardOrdering.moving(data[index].items, itemID: itemID, afterID: afterID)
         }
     }
     func addDraft(projectID: String, title: String, body: String) async throws { if let writeError { throw writeError }; writeCount += 1 }

@@ -60,6 +60,11 @@ public actor DemoProjectsAPI: ProjectsAPI {
         guard let index = data.items.firstIndex(where: { $0.id == itemID }) else { throw FjordError.message(L10n.core("The item does not exist.")) }
         data.items[index].selections[fieldID] = optionID; snapshots[projectID] = data
     }
+    public func moveItem(projectID: String, itemID: String, afterID: String?) async throws {
+        var data = try requireProject(projectID)
+        data.items = BoardOrdering.moving(data.items, itemID: itemID, afterID: afterID)
+        snapshots[projectID] = data
+    }
     public func addDraft(projectID: String, title: String, body: String) async throws {
         _ = try await createItem(projectID: projectID, request: NewItemRequest(title: title, body: body))
     }

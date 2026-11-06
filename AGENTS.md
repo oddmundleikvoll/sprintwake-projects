@@ -61,6 +61,12 @@ reference can crash that compiler's IR generation; local Swift 6.4 masks it.
 - Do not replace live single-select option collections: GitHub has no conditional
   append, so concurrent edits can remove options. Open GitHub's board for column
   creation. Only the isolated demo adds/deletes columns in memory.
+- Column drag order is a local account/project/grouping preference; never replace
+  GitHub option lists to reorder columns. Card order uses ProjectV2 item position
+  with a predecessor from the full destination column, including search-hidden cards.
+  Status and position are separate writes: retain confirmed status on position
+  failure, do not retry automatically, and reject stale drag contexts. Conversation
+  drafts keep chronological presentation. Demo column layout stays in memory.
 - Chat is backed by self-assigned project drafts. Treat draft creation followed
   by a failed status update as a partial success, never a reason to recreate it.
   Insert the mutation-confirmed message directly; do not wait for a full project

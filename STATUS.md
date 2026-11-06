@@ -1,12 +1,12 @@
 # Sprintwake Projects status
 
-Updated 2026-11-05. This snapshot is current; the historical record below retains
+Updated 2026-11-06. This snapshot is current; the historical record below retains
 earlier test counts, temporary blockers and superseded decisions. Continue from
 [PLAN.md](PLAN.md), not an older outstanding-work entry.
 
 ## Current snapshot
 
-- **App:** Sprintwake Projects 0.2.1, build 3, publicly released; native
+- **App:** Sprintwake Projects 0.3.0, build 4, prepared for publication; native
   macOS 14+, Swift 6/SwiftUI.
   Branding and the S logo are complete. English is the first-launch default;
   saved language choices are preserved. English and Norwegian Bokmål are selectable.
@@ -19,6 +19,16 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
   through `Node`. Both item kinds pass the schema regression and atomic-operation
   tests. The correction and release history are recorded in `CHANGELOG.md`
   and the matching public GitHub release notes.
+- **Board ordering (0.3.0 preparation):** column headings now support local
+  account/project/grouping-scoped order; card drops save GitHub project priority
+  order within or between columns. Context menus offer column left/right and
+  card up/down actions. Cross-column partial success is retained, field updates
+  require a matching confirmed item ID, and stale drag contexts are rejected.
+  Conversation messages keep chronological presentation. The standard local
+  package has been rebuilt. Version 0.3.0/build 4 is being prepared for publication.
+  Native menu actions passed in the isolated demo at default/expanded sizes.
+  Simulated mouse drags did not establish a successful gesture: drag/drop and
+  minimum-size visual qualification remain unverified and must not be claimed.
 - **Latest requested changes:** refreshed workspace/sidebar, project heading,
   board cards, sign-in and conversation surfaces share a light/dark indigo palette.
   Column plus buttons and ⌘N remain; no top-right New task button was reintroduced.
@@ -35,22 +45,22 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
 - **Updates:** Sparkle download indicator, menu/settings, signed feed/archive
   verification and guarded install/relaunch are implemented. Community release
   preparation works without paid Apple membership. `--notarize` is optional.
-- **Local app:** `dist/Sprintwake Projects.app` contains the refreshed design,
-  shared discovery, earlier toolbar/conversation fixes and the assignment
-  correction (local 0.2.0/build 2). It was preserved during public 0.2.1 packaging.
-  Optimized packaging and deep strict signature verification passed.
-  The stopped standard app was replaced and relaunched. After the user's macOS
-  Keychain approval, the saved account, selected project, all 12 items and Slack
-  history were restored. Earlier design verification
-  covered light/dark appearance, default/minimum window sizing, search, board/list,
-  conversation sending and sign-in layout, plus restoration of all 12 live items
-  and Slack history. Local builds have public update checks disabled.
+- **Local app:** one canonical 0.3.0/build 4 app is installed in
+  `~/Applications/Sprintwake Projects.app`, with the release updater enabled.
+  Twenty-one redundant old, extracted and demo app bundles were moved to Trash
+  and unregistered from LaunchServices; Sprintwake Studios is a separate app and
+  was preserved. The old app was closed after checking for unfinished edits.
+  New optimized packaging, updater protections and deep strict signature pass;
+  relaunch and final public-asset verification are pending. Development builds
+  and isolated demos still have public update checks disabled.
 - **Publication:** source is public at
   [oddmundleikvoll/sprintwake-projects](https://github.com/oddmundleikvoll/sprintwake-projects)
   under the MIT License. README has installation/setup instructions, a copyable
   LLM prompt and native screenshots with fictional isolated demo data only.
-  [Community release v0.2.1](https://github.com/oddmundleikvoll/sprintwake-projects/releases/tag/v0.2.1)
-  (build 3, arm64/macOS 14+) is public, with signed ZIP/appcast and a portable checksum.
+  The last verified public release is
+  [v0.2.1](https://github.com/oddmundleikvoll/sprintwake-projects/releases/tag/v0.2.1).
+  Version 0.3.0/build 4 (arm64/macOS 14+) is being prepared with signed ZIP/appcast
+  and a portable checksum.
   [Hosted CI](https://github.com/oddmundleikvoll/sprintwake-projects/actions/runs/42042024414)
   passed for release source `cff54d1`. Anonymous HTTPS downloads, checksum and
   both archive/feed production-key signatures were verified. Fresh installation
@@ -60,7 +70,7 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
 
 | Check | Latest recorded result |
 | --- | --- |
-| `./scripts/test.sh` | 121 tests in 14 suites passed; optional real Keychain test skipped in this run. |
+| `./scripts/test.sh` | 134 tests in 16 suites passed; optional real Keychain test skipped in this run. |
 | `./scripts/test-release.sh` | Passed community/notarized preflight, feed/key/metadata validation and valid/corrupt signature checks. |
 | Issue/PR assignment correction | Original schema error reproduced through a read-only GitHub query; the Node fragment is accepted. Focused assignment tests and full 121-test/14-suite run pass; no real assignment writes used. |
 | Community production package | Optimized ad hoc app built without Developer ID; public updater enabled, test mode off, deep strict signature and framework symlinks verified. |
@@ -70,7 +80,8 @@ earlier test counts, temporary blockers and superseded decisions. Continue from
 | Community ZIP/feed signatures | Published v0.2.1 ZIP/feed signed with the existing production Keychain key; private key was not exported. Anonymous downloads and latest-feed URL match the local verified artifacts; downloaded checksum and both archive/feed signatures pass public-key verification. Earlier disposable-key tests rejected corrupted archives. |
 | Independent reviews | Access, localization, Slack and updater/release findings addressed; no material findings left in the latest reviews. |
 | Conversation changes | Immediate local GitHub-message insertion verified on the native demo board/full conversation; ⌘N still works and toolbar task button is absent. Slack stale-history protection and partial-placement reconciliation passed injected tests. |
-| Latest standard package | Assignment correction packaged with `./scripts/build-app.sh` using a staging app path, then installed while the standard app was stopped. Optimized build and deep strict signature passed; packaged executable contains the corrected Node fragment. After the user's macOS Keychain approval, native restart restored the saved account, selected project, all 12 items and Slack history. No real assignment write was used. |
+| Latest standard package | `./scripts/build-app.sh` passed with the standard app stopped. Deep strict signature, both exported drag types and en/nb resources passed independent verification. No live app launch, credentials or real writes were used. |
+| Board ordering | 13 new tests cover GraphQL confirmation, before/after and empty/unassigned/ungrouped moves, filtered-card predecessors, partial failure, failed reload, logout and account/project/field/demo isolation. Native card up/column right menu actions passed in the isolated demo; actual mouse drag/drop and minimum-size layout remain unverified. |
 | Design refresh | Native isolated demo passed dark/light visual checks, default/minimum sizing, search, board/list and local conversation send. Sign-in card checked in light appearance. Independent review found no material defects; increased-contrast styling is implemented but not manually exercised. |
 
 GitHub task/message mutations and Slack posting were verified with injected APIs
@@ -85,6 +96,9 @@ resolved it. Local Swift 6.4 had not exposed that crash. There is no separate
 lint or formatter command.
 
 ## Remaining work, in order
+
+- Publish the reviewed 0.3.0/build 4 source and signed artifacts, then verify
+  public downloads and relaunch the canonical user Applications installation.
 
 1. Test a fresh public download on another Mac or separate macOS test account,
    including first-launch approval, English/Norwegian and GitHub/Slack restoration.
@@ -602,3 +616,24 @@ No Client Secret was generated. No private token is written to this repository.
 - Public package is arm64/macOS 14+, ad hoc signed with updater enabled, en/nb
   resources and both licenses. The running local app was preserved. Fresh install
   on another Mac and installation through the public feed remain unverified.
+
+### 2026-11-06 — Local board ordering
+
+- Added typed column and card drag/drop plus native context-menu alternatives.
+  Columns keep a local account/project/grouping layout without replacing GitHub
+  field options; cards use the documented ProjectV2 position mutation. GitHub
+  explicitly documents POSITION/ASC as the default item connection order.
+- Status and position remain separate writes, with concrete field-update
+  confirmation, partial-success notices, no automatic retry, full-column
+  predecessor calculation and session/project/grouping guards. Conversation
+  drafts retain chronological presentation. No real GitHub writes were tested.
+- Focused ordering/grouping/localization tests passed, followed by all 134 tests
+  in 16 suites (optional real Keychain test skipped), `swift build`, release
+  configuration checks and optimized standard packaging. Independent review
+  found an unconfirmed field-result path; it was fixed and covered before the
+  full passing run. Re-review found no material defect.
+- Independent package verification passed deep strict codesign, en/nb strings
+  and exported board item/column UTTypes. Native isolated demo menus reordered
+  a task and a column; default and expanded dark layouts were inspected.
+  Automated mouse drags did not yield a confirmed drop, so gesture and minimum
+  window-size qualification remain open. The feature has not been published.

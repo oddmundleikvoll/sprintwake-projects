@@ -1,10 +1,16 @@
 # Sprintwake Projects plan
 
-Updated 2026-11-05. [STATUS.md](STATUS.md) contains the current snapshot and dated
+Updated 2026-11-06. [STATUS.md](STATUS.md) contains the current snapshot and dated
 verification history. [CONTEXT.md](CONTEXT.md) records architecture and decisions.
 This plan records publication and the remaining distribution verification.
 
 ## Completed
+
+- [x] Implement local column drag order and GitHub-backed card priority order,
+  with keyboard-accessible menu alternatives, partial-success preservation and
+  stale-drop/session guards. Preparing 0.3.0/build 4 for publication.
+- [x] Consolidate 21 redundant Projects/Fjord/QA bundles into one canonical
+  user Applications installation, with recoverable Trash cleanup; preserve Studios.
 
 - [x] Fix issue/PR assignment schema validation by selecting the returned ID
   through `Node`; cover atomic add/remove for both item kinds.
@@ -29,7 +35,7 @@ This plan records publication and the remaining distribution verification.
   installation that protects active writes and unfinished edits.
 - [x] Community release preparation without paid Apple membership. Developer ID
   and notarization remain optional through `./scripts/release.sh --notarize`.
-- [x] Latest verification: 121 tests across 14 suites, release configuration and
+- [x] Latest local verification: 134 tests across 16 suites, release configuration and
   signature tests, optimized packaging, isolated native update/relaunch and
   rejection of changed archives. See STATUS.md for the exact scope and limits.
 - [x] Retire the old Sporverk app copy by moving it to Trash.
@@ -94,7 +100,16 @@ APIs and isolated demo fixtures, not real permission changes.
   local verified artifacts. Downloaded ZIP checksum/Ed25519 signature and the
   extracted app's deep strict code signature pass.
 
-## Next: qualify fresh installation and future updates
+## Next: publish 0.3.0 and consolidate the local installation
+
+1. Publish 0.3.0/build 4 using its CHANGELOG.md entry; verify hosted CI, signed
+   assets and public downloads. Relaunch the installed canonical app and confirm
+   its version and normal startup; complete cleanup of temporary release staging.
+2. Record the scope of native gesture/layout verification accurately. Native move
+   menus, state/API tests and packaging pass; mouse drag/drop and minimum-size
+   visual qualification are not yet established. Do not claim those checks passed.
+
+## Remaining distribution qualification
 
 1. Test a fresh public download on another Mac or a separate macOS test account.
    Record first-launch approval and Keychain prompts, English/Norwegian, GitHub

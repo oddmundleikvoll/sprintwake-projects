@@ -42,6 +42,18 @@ capture a message generation so a pre-send response cannot erase a confirmed sen
 Column creation opens the project's GitHub board. The public API only replaces
 the full option collection, with no conditional append. The native client never
 does this replacement, which could remove another admin's concurrent edits.
+Column headings can be dragged to reorder locally. Layout preferences are scoped
+by GitHub account ID, project and grouping field, and restored independently of
+GitHub option order. New options append and removed/hidden groups are ignored.
+Demo column layout lives in memory only. Task drops resolve a predecessor from
+the full destination column, including search-hidden cards, then use GitHub's
+`updateProjectV2ItemPosition` project priority order. GitHub views with explicit
+sorts may display a different order. Cross-column drops confirm the field write
+before ordering; an ordering failure preserves the confirmed status and explains
+the partial success. No automatic retry occurs. Typed drag payloads include a
+session/project/grouping context; stale drops and late responses are rejected.
+Conversation drafts retain chronological presentation. Native context menus offer
+card up/down and column left/right actions as alternatives to dragging.
 Only the isolated demo adds/deletes columns in memory. Participant grants use GitHub's
 administrator-checked collaborator mutation. The full role list remains in
 GitHub Manage access because ProjectV2 has no documented collaborator query.

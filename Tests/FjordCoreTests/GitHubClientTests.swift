@@ -97,7 +97,8 @@ struct GitHubClientTests {
             if index == 1 {
                 #expect(query.contains("updateProjectV2ItemFieldValue")); #expect(vars["option"] as? String == "done")
             } else { #expect(query.contains("clearProjectV2ItemFieldValue")); #expect(vars["option"] == nil) }
-            return jsonResponse(#"{"data":{"ok":{}}}"#)
+            let operation = index == 1 ? "updateProjectV2ItemFieldValue" : "clearProjectV2ItemFieldValue"
+            return jsonResponse("{\"data\":{\"\(operation)\":{\"projectV2Item\":{\"id\":\"item-not-content\"}}}}")
         }
         let client = GitHubClient(token: "fixture", transport: transport)
         try await client.setSelection(projectID: "p", itemID: "item-not-content", fieldID: "status-field", optionID: "done")
@@ -127,7 +128,7 @@ struct GitHubClientTests {
             }
             #expect(vars["item"] as? String == "created-item")
             #expect(vars["option"] as? String == "chat-option")
-            return jsonResponse(#"{"data":{"updateProjectV2ItemFieldValue":{}}}"#)
+            return jsonResponse(#"{"data":{"updateProjectV2ItemFieldValue":{"projectV2Item":{"id":"created-item"}}}}"#)
         }
         let result = try await GitHubClient(token: "fixture", transport: transport).sendChatMessage(projectID: "p", fieldID: "f", optionID: "chat-option", authorID: "author-id", text: text)
         guard case .sent(let item) = result else { Issue.record("Expected confirmed message"); return }

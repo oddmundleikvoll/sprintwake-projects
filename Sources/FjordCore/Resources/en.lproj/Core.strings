@@ -94,3 +94,6 @@
 "Your sign-in expired or was revoked. Sign in again." = "Your sign-in expired or was revoked. Sign in again.";
 "Some shared projects could not be checked. Previously loaded projects are kept. Try refreshing again." = "Some shared projects could not be checked. Previously loaded projects are kept. Try refreshing again.";
 "Shared projects could not be checked. Your sign-in and current project were kept. Try refreshing again." = "Shared projects could not be checked. Your sign-in and current project were kept. Try refreshing again.";
+
+"The task moved to the column, but its order could not be confirmed. Refresh before moving it again." = "The task moved to the column, but its order could not be confirmed. Refresh before moving it again.";
+"GitHub did not confirm the task's column. Refresh before moving it again." = "GitHub did not confirm the task's column. Refresh before moving it again.";

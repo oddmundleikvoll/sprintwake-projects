@@ -269,3 +269,10 @@
 "More shared projects are checked automatically over the next few minutes." = "More shared projects are checked automatically over the next few minutes.";
 
 "Status" = "Status";
+
+"Move up" = "Move up";
+"Move down" = "Move down";
+"Move column left" = "Move column left";
+"Move column right" = "Move column right";
+"Drag the heading to reorder columns on this Mac." = "Drag the heading to reorder columns on this Mac.";
+"Drag to reorder. Drop on the upper half of a card to place before it, or the lower half to place after it." = "Drag to reorder. Drop on the upper half of a card to place before it, or the lower half to place after it.";

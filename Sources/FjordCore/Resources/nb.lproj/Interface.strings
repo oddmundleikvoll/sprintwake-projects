@@ -269,3 +269,10 @@
 "More shared projects are checked automatically over the next few minutes." = "Flere delte prosjekter sjekkes automatisk i løpet av de neste minuttene.";
 
 "Status" = "Status";
+
+"Move up" = "Flytt opp";
+"Move down" = "Flytt ned";
+"Move column left" = "Flytt kolonnen til venstre";
+"Move column right" = "Flytt kolonnen til høyre";
+"Drag the heading to reorder columns on this Mac." = "Dra overskriften for å endre kolonnerekkefølgen på denne Macen.";
+"Drag to reorder. Drop on the upper half of a card to place before it, or the lower half to place after it." = "Dra for å endre rekkefølgen. Slipp på øvre halvdel av et kort for å plassere foran det, eller nedre halvdel for å plassere etter det.";

@@ -94,3 +94,6 @@
 "Your sign-in expired or was revoked. Sign in again." = "Innloggingen er utløpt eller tilbakekalt. Logg inn igjen.";
 "Some shared projects could not be checked. Previously loaded projects are kept. Try refreshing again." = "Noen delte prosjekter kunne ikke sjekkes. Tidligere lastede prosjekter beholdes. Prøv å oppdatere igjen.";
 "Shared projects could not be checked. Your sign-in and current project were kept. Try refreshing again." = "Delte prosjekter kunne ikke sjekkes. Innloggingen og det valgte prosjektet ble beholdt. Prøv å oppdatere igjen.";
+
+"The task moved to the column, but its order could not be confirmed. Refresh before moving it again." = "Oppgaven ble flyttet til kolonnen, men rekkefølgen kunne ikke bekreftes. Oppdater før du flytter den igjen.";
+"GitHub did not confirm the task's column. Refresh before moving it again." = "GitHub bekreftet ikke oppgavens kolonne. Oppdater før du flytter den igjen.";

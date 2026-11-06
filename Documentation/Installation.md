@@ -6,7 +6,7 @@ if desired. GitHub and Slack content keeps its original language.
 
 ## Install the app
 
-[Download Sprintwake Projects 0.2.1](https://github.com/oddmundleikvoll/sprintwake-projects/releases/download/v0.2.1/Sprintwake-Projects-0.2.1.zip),
+[Download Sprintwake Projects 0.3.0](https://github.com/oddmundleikvoll/sprintwake-projects/releases/download/v0.3.0/Sprintwake-Projects-0.3.0.zip),
 or view [all releases and checksums](https://github.com/oddmundleikvoll/sprintwake-projects/releases).
 The initial package targets Apple Silicon (arm64). Intel/universal packages have
 not been qualified. Check **Apple menu → About This Mac** for your processor.

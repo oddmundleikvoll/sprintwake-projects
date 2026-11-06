@@ -216,7 +216,37 @@ public struct GitHubClient: ProjectsAPI {
             }
             """
         }
-        let _: MutationData = try await graphQL(query, variables)
+        struct SelectionData: Decodable {
+            struct Payload: Decodable {
+                struct Item: Decodable { let id: String }
+                let projectV2Item: Item
+            }
+            let updateProjectV2ItemFieldValue: Payload?
+            let clearProjectV2ItemFieldValue: Payload?
+        }
+        let result: SelectionData = try await graphQL(query, variables)
+        let confirmedID = optionID == nil ? result.clearProjectV2ItemFieldValue?.projectV2Item.id
+            : result.updateProjectV2ItemFieldValue?.projectV2Item.id
+        guard confirmedID == itemID else {
+            throw FjordError.message(L10n.core("GitHub did not confirm the task's column. Refresh before moving it again."))
+        }
+    }
+
+    public func moveItem(projectID: String, itemID: String, afterID: String?) async throws {
+        struct PositionData: Decodable {
+            struct Payload: Decodable {
+                struct Items: Decodable { let totalCount: Int }
+                let items: Items
+            }
+            let updateProjectV2ItemPosition: Payload
+        }
+        let _: PositionData = try await graphQL("""
+        mutation($project: ID!, $item: ID!, $after: ID) {
+          updateProjectV2ItemPosition(input: {projectId: $project, itemId: $item, afterId: $after}) {
+            items(first: 1) { totalCount }
+          }
+        }
+        """, ["project": .string(projectID), "item": .string(itemID), "after": afterID.map(JSONValue.string) ?? .null])
     }
 
     public func addDraft(projectID: String, title: String, body: String) async throws {

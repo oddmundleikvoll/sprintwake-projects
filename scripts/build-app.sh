@@ -59,6 +59,12 @@ info = {
     "LSMinimumSystemVersion": "14.0",
     "CFBundleDevelopmentRegion": "en",
     "CFBundleLocalizations": ["en", "nb"],
+    "UTExportedTypeDeclarations": [
+        {"UTTypeIdentifier": "no.oddmund.Fjord.board-item", "UTTypeConformsTo": ["public.data"],
+         "UTTypeDescription": "Sprintwake board item"},
+        {"UTTypeIdentifier": "no.oddmund.Fjord.board-column", "UTTypeConformsTo": ["public.data"],
+         "UTTypeDescription": "Sprintwake board column"},
+    ],
     "CFBundleURLTypes": [{
         "CFBundleURLName": "Sprintwake Slack sign-in",
         "CFBundleURLSchemes": ["sprintwake-slack"],

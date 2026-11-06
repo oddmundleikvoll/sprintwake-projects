@@ -20,7 +20,7 @@ projects, accounts or Slack messages are shown.*
 
 ## Install
 
-**[Download Sprintwake Projects 0.2.1](https://github.com/oddmundleikvoll/sprintwake-projects/releases/download/v0.2.1/Sprintwake-Projects-0.2.1.zip)**
+**[Download Sprintwake Projects 0.3.0](https://github.com/oddmundleikvoll/sprintwake-projects/releases/download/v0.3.0/Sprintwake-Projects-0.3.0.zip)**
 — **macOS 14+ · Apple Silicon (arm64)**.
 [All releases and checksums](https://github.com/oddmundleikvoll/sprintwake-projects/releases)
 · [Build from source](#build-from-source). Intel/universal packages have not been qualified.
@@ -128,11 +128,11 @@ Optional Slack conversations, shown with local demo messages:
 
 ## Project status
 
-Version 0.2.1/build 3 includes GitHub boards, issues, drafts and project
-conversations, optional Slack, and signed Sparkle updates. It fixes issue/PR
-assignment failures with `Field 'id' doesn't exist on type 'Assignable'`.
-Source and the signed community release are public; macOS CI and public
-download/signature checks pass.
+Version 0.3.0/build 4 adds local column ordering and GitHub-backed card priority
+ordering, with native move menus and preservation of partially completed moves.
+It includes the earlier issue/PR assignment correction, project conversations,
+optional Slack and signed Sparkle updates. Source and community release
+verification are recorded in STATUS.md.
 Fresh installation on another Mac and a subsequent public update remain unverified.
 See [CHANGELOG.md](CHANGELOG.md), [current status](STATUS.md) and
 the [ordered publication plan](PLAN.md) for verified scope and remaining work.
@@ -219,7 +219,10 @@ passwords only in the system dialog.
   Entries show their owner and a **New** marker until opened. Opened shared boards
   and their selection are remembered per GitHub account and verified again at launch.
 - Switch between board and list, search by title, repository or assignee, and group
-  by the project's real single-select fields. Drag cards or use status menus.
+  by the project's real single-select fields. Drag cards between columns and onto
+  the upper/lower half of another card to place them before/after it. Card order
+  is saved to GitHub's project priority order; a GitHub view with its own sort
+  may display a different order. Right-click a card for Move up / Move down.
   Items without a status stay visible; empty unassigned groups are hidden.
 - Create an issue or draft using a column's plus button with placement preset.
   Choose a repository and assignees; look up additional repositories by owner/name.
@@ -230,6 +233,10 @@ passwords only in the system dialog.
   overwrite each other. The picker explains this limitation.
 - Edit drafts, issues and pull requests when GitHub grants write access. The app
   checks for intervening content changes before saving.
+- Drag a column heading onto the left/right half of another heading to place it
+  before/after that column. Column menus also offer Move column left / right.
+  This layout is saved on this Mac per GitHub account, project and grouping field;
+  it does not change GitHub field options. Conversation messages keep time order.
 - Create and delete real board columns on GitHub, then refresh the app. GitHub's
   API replaces the entire option list without conditional updates, which can
   remove another administrator's concurrent changes. Only the local demo edits

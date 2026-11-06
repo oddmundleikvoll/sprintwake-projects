@@ -20,7 +20,7 @@ struct BoardView: View {
                             .overlay { RoundedRectangle(cornerRadius: 18).strokeBorder(WorkspaceStyle.border, lineWidth: 0.75).allowsHitTesting(false) }
                     }
                     if let field = model.selectedField {
-                        ForEach(BoardGrouping.columns(field: field, items: items)) { column in
+                        ForEach(model.boardColumns(items: items)) { column in
                             BoardColumnView(model: model, title: column.title, option: column.option, fieldID: field.id,
                                             items: column.items, onOpen: onOpen, onCreate: onCreate,
                                             onColumns: onColumns, onDelete: { if let option = column.option { onDeleteColumn(option) } })
@@ -49,6 +49,9 @@ private struct BoardColumnView: View {
     let onColumns: () -> Void
     let onDelete: () -> Void
     @ViewState private var targeted = false
+    @ViewState private var columnTargeted = false
+    private var columnID: String { option?.id ?? "unassigned" }
+    private var canArrangeColumns: Bool { fieldID != nil && !model.isLoadingProject && !model.isMutating && !model.isAuthenticating }
     private var conversation: Bool { option != nil && option?.id == model.conversationOptionID }
     private var placement: ItemPlacement? {
         guard let fieldID, let option else { return nil }
@@ -58,13 +61,7 @@ private struct BoardColumnView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 8) {
-                Circle().fill(option?.swiftUIColor ?? .secondary).frame(width: 9, height: 9)
-                    .padding(5).background((option?.swiftUIColor ?? .secondary).opacity(0.12), in: Circle())
-                    .accessibilityHidden(true)
-                Text(title).font(.headline).lineLimit(1)
-                Text(items.count, format: .number).font(.caption.weight(.semibold)).monospacedDigit()
-                    .foregroundStyle(.secondary).padding(.horizontal, 7).padding(.vertical, 3)
-                    .background(WorkspaceStyle.surface, in: Capsule())
+                draggableHeading
                 Spacer(minLength: 4)
                 Button { onCreate(placement) } label: { Image(systemName: "plus") }
                     .buttonStyle(.borderless).help(L10n.ui("Create a task in %@", title)).accessibilityLabel(L10n.ui("New task in %@", title)).disabled(!model.canWrite)
@@ -75,11 +72,22 @@ private struct BoardColumnView: View {
                             Button(L10n.ui("Use as conversation column"), systemImage: "bubble.left.and.bubble.right") { model.setConversationOption(option.id) }
                         }
                         Button(L10n.ui("Manage columns …"), systemImage: "slider.horizontal.3", action: onColumns)
+                        Button(L10n.ui("Move column left"), systemImage: "arrow.left") { moveColumn(left: true) }.disabled(!canMoveColumn(left: true))
+                        Button(L10n.ui("Move column right"), systemImage: "arrow.right") { moveColumn(left: false) }.disabled(!canMoveColumn(left: false))
                         Divider()
                         Button(L10n.ui("Delete column …"), systemImage: "trash", role: .destructive, action: onDelete).disabled(!model.canWrite)
                     } label: { Image(systemName: "ellipsis") }.menuStyle(.borderlessButton).fixedSize().help(L10n.ui("Options for %@", title))
                 }
             }.padding(.horizontal, 14).padding(.vertical, 16)
+                .background(columnTargeted ? WorkspaceStyle.accent.opacity(0.12) : .clear)
+                .dropDestination(for: BoardColumnDrag.self) { values, point in
+                    guard canArrangeColumns, values.count == 1, let drag = values.first,
+                          drag.contextID == model.boardDragID, let fieldID,
+                          drag.projectID == model.selectedProjectID, drag.fieldID == fieldID else { return false }
+                    if drag.columnID == columnID { return true }
+                    return model.moveColumn(projectID: drag.projectID, fieldID: fieldID, columnID: drag.columnID,
+                                            targetID: columnID, before: point.x < (conversation ? 340 : 292) / 2)
+                } isTargeted: { columnTargeted = $0 }
             if option == nil, fieldID != nil {
                 Text(L10n.ui("Tasks without a selected GitHub value.")).font(.caption).foregroundStyle(.secondary).padding(.horizontal, 12).padding(.bottom, 10)
             }
@@ -90,9 +98,12 @@ private struct BoardColumnView: View {
                         LazyVStack(spacing: 10) {
                             if items.isEmpty { Text(L10n.ui("Start the conversation below.")).font(.callout).foregroundStyle(.secondary).padding(.top, 18) }
                             ForEach(messages) { item in
-                                MessageBubble(item: item, mine: item.authorLogin == model.user?.login, compact: true, onOpen: { onOpen(item) }).id(item.id)
+                                MessageBubble(item: item, mine: item.authorLogin == model.user?.login, compact: true, onOpen: { onOpen(item) })
+                                    .boardItemDraggable(model: model, item: item).id(item.id)
                             }
-                            ForEach(items.filter { $0.kind != .draft }) { item in ItemCard(model: model, item: item, onOpen: { onOpen(item) }).draggable(item.id) }
+                            ForEach(items.filter { $0.kind != .draft }) { item in
+                                BoardTaskCard(model: model, item: item, optionID: option?.id, onOpen: { onOpen(item) })
+                            }
                         }.padding(10)
                     }.defaultScrollAnchor(.bottom)
                         .onChange(of: messages.last?.id) { _, id in if let id { proxy.scrollTo(id, anchor: .bottom) } }
@@ -104,7 +115,9 @@ private struct BoardColumnView: View {
             } else {
                 ScrollView {
                     LazyVStack(spacing: 10) {
-                        ForEach(items) { item in ItemCard(model: model, item: item, onOpen: { onOpen(item) }).draggable(item.id) }
+                        ForEach(items) { item in
+                            BoardTaskCard(model: model, item: item, optionID: option?.id, onOpen: { onOpen(item) })
+                        }
                         if items.isEmpty {
                             VStack(spacing: 10) {
                                 Image(systemName: "tray").font(.title2).accessibilityHidden(true)
@@ -116,13 +129,54 @@ private struct BoardColumnView: View {
             }
         }.frame(width: conversation ? 340 : 292).frame(maxHeight: .infinity, alignment: .topLeading)
             .background(WorkspaceStyle.column, in: RoundedRectangle(cornerRadius: 18))
-            .overlay { RoundedRectangle(cornerRadius: 18).strokeBorder(targeted ? WorkspaceStyle.accent : WorkspaceStyle.border, lineWidth: targeted ? 2 : 0.75).allowsHitTesting(false) }
-            .dropDestination(for: String.self) { values, _ in
-                guard model.canWrite, fieldID != nil, values.count == 1,
-                      let id = values.first, model.snapshot?.items.contains(where: { $0.id == id }) == true else { return false }
-                Task { await model.changeStatus(itemID: id, optionID: option?.id) }
+            .overlay { RoundedRectangle(cornerRadius: 18).strokeBorder(targeted && model.canWrite ? WorkspaceStyle.accent : WorkspaceStyle.border, lineWidth: targeted && model.canWrite ? 2 : 0.75).allowsHitTesting(false) }
+            .dropDestination(for: BoardItemDrag.self) { values, _ in
+                guard model.canWrite, values.count == 1, let drag = values.first,
+                      drag.contextID == model.boardDragID, drag.projectID == model.selectedProjectID,
+                      drag.fieldID == fieldID else { return false }
+                Task {
+                    guard drag.contextID == model.boardDragID else { return }
+                    await model.moveItem(projectID: drag.projectID, fieldID: drag.fieldID, itemID: drag.itemID, optionID: option?.id)
+                }
                 return true
             } isTargeted: { targeted = $0 }
+    }
+
+    private var heading: some View {
+        HStack(spacing: 8) {
+            Circle().fill(option?.swiftUIColor ?? .secondary).frame(width: 9, height: 9)
+                .padding(5).background((option?.swiftUIColor ?? .secondary).opacity(0.12), in: Circle()).accessibilityHidden(true)
+            Text(title).font(.headline).lineLimit(1)
+            Text(items.count, format: .number).font(.caption.weight(.semibold)).monospacedDigit()
+                .foregroundStyle(.secondary).padding(.horizontal, 7).padding(.vertical, 3)
+                .background(WorkspaceStyle.surface, in: Capsule())
+        }.contentShape(Rectangle())
+    }
+
+    @ViewBuilder private var draggableHeading: some View {
+        if canArrangeColumns, let projectID = model.selectedProjectID, let fieldID {
+            heading.draggable(BoardColumnDrag(contextID: model.boardDragID, projectID: projectID, fieldID: fieldID, columnID: columnID))
+                .help(L10n.ui("Drag the heading to reorder columns on this Mac."))
+                .contextMenu {
+                    Button(L10n.ui("Move column left"), systemImage: "arrow.left") { moveColumn(left: true) }.disabled(!canMoveColumn(left: true))
+                    Button(L10n.ui("Move column right"), systemImage: "arrow.right") { moveColumn(left: false) }.disabled(!canMoveColumn(left: false))
+                }
+        } else { heading }
+    }
+
+    private var columnIDs: [String] { model.boardColumns(items: model.snapshot?.items ?? []).map(\.id) }
+
+    private func canMoveColumn(left: Bool) -> Bool {
+        guard canArrangeColumns, let index = columnIDs.firstIndex(of: columnID) else { return false }
+        return left ? index > 0 : index + 1 < columnIDs.count
+    }
+
+    private func moveColumn(left: Bool) {
+        let ids = columnIDs
+        guard canMoveColumn(left: left), let index = ids.firstIndex(of: columnID),
+              let projectID = model.selectedProjectID, let fieldID else { return }
+        model.moveColumn(projectID: projectID, fieldID: fieldID, columnID: columnID,
+                         targetID: ids[index + (left ? -1 : 1)], before: left)
     }
 }
 

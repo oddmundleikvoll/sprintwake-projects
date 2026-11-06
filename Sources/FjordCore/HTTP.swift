@@ -67,6 +67,7 @@ public protocol ProjectsAPI: Sendable {
     func resolve(_ reference: ProjectReference) async throws -> ProjectSummary
     func snapshot(project: ProjectSummary) async throws -> ProjectSnapshot
     func setSelection(projectID: String, itemID: String, fieldID: String, optionID: String?) async throws
+    func moveItem(projectID: String, itemID: String, afterID: String?) async throws
     func addDraft(projectID: String, title: String, body: String) async throws
     func updateContent(item: ProjectItem, title: String, body: String) async throws
     func grantAccess(projectID: String, username: String, role: CollaboratorRole) async throws
